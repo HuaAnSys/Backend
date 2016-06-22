@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huaan.shop.dao.UserInfoMapper">
+	<resultMap id="BaseResultMap" type="com.huaan.shop.model.UserInfo">
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="phoneNo" property="phoneNo" jdbcType="VARCHAR" />
+		<result column="identifierNo" property="identifierNo" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+		<result column="pwd" property="pwd" jdbcType="VARCHAR" />
+		<result column="nickName" property="nickName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id
+		,phoneNo
+		,identifierNo
+		,name
+		,sex
+		,pwd
+		,nickName
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from user_info
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		user_info
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.huaan.shop.model.UserInfo">
+		insert into user_info (id,
+		uname, unumber
+		)
+		values (#{id,jdbcType=INTEGER},
+		#{uname,jdbcType=VARCHAR},
+		#{unumber,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.huaan.shop.model.UserInfo">
+		insert into user_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="uname != null">
+				uname,
+			</if>
+			<if test="unumber != null">
+				unumber,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="uname != null">
+				#{uname,jdbcType=VARCHAR},
+			</if>
+			<if test="unumber != null">
+				#{unumber,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.huaan.shop.model.UserInfo">
+		update user_info
+		<set>
+			<if test="uname != null">
+				uname = #{uname,jdbcType=VARCHAR},
+			</if>
+			<if test="unumber != null">
+				unumber = #{unumber,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.huaan.shop.model.UserInfo">
+		update user_info
+		set uname = #{uname,jdbcType=VARCHAR},
+		unumber =
+		#{unumber,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<resultMap type="com.huaan.shop.model.UserInfo" id="UserCourseMap"
+		extends="BaseResultMap">
+		<collection property="courseInfos" javaType="list"
+			ofType="com.huaan.shop.model.CourseInfo">
+			<id property="id" column="course_id" jdbcType="INTEGER" />
+			<result property="cname" column="cname" jdbcType="VARCHAR" />
+			<result property="caddress" column="caddress" jdbcType="VARCHAR" />
+		</collection>
+
+
+	</resultMap>
+	<select id="selectAll" resultMap="UserCourseMap">
+		select u.id, u.uname,
+		u.unumber, c.id course_id, c.cname, c.caddress from user_info u left
+		join course_user_info cu on u.id = cu.uid
+		left join course_info c on
+		cu.cid = c.id
+	</select>
+	
+	
+	<insert id="registerUser" parameterType="com.huaan.shop.model.UserInfo">
+		insert into user 
+		(id
+		,phoneNo
+		,identifierNo
+		,name
+		,sex
+		,pwd
+		,nickName
+		)
+		values 
+		(#{id,jdbcType=INTEGER}
+		,#{phoneNo,jdbcType=VARCHAR}
+		,#{identifierNo,jdbcType=VARCHAR}
+		,#{name,jdbcType=VARCHAR}
+		,#{sex,jdbcType=VARCHAR}
+		,#{pwd,jdbcType=VARCHAR}
+		,#{nickName,jdbcType=VARCHAR}
+		)
+	</insert>
+	<select id="selectByIcd" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		where identifierNo = #{identifierNo,jdbcType=VARCHAR}
+	</select>
+	<select id="selectPwdByphoneNo" resultType="java.lang.String" parameterType="java.lang.String">
+		select pwd from user
+		where phoneNo = #{phoneNo,jdbcType=VARCHAR}
+	</select>
+</mapper>
