@@ -31,19 +31,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping("/showInfo/{userId}")
-	public String showUserInfo(ModelMap modelMap, @PathVariable int userId) {
-		UserInfo userInfo = userService.getUserById(userId);
-		modelMap.addAttribute("userInfo", userInfo);
-		return "/user/showInfo";
-	}
-
-	@RequestMapping("/showInfos")
-	public @ResponseBody Object showUserInfos() {
-		List<UserInfo> userInfos = userService.getUsers();
-		return userInfos;
-	}
-
 	@RequestMapping(value = "/registerUser", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
 	public @ResponseBody String registerUser(@RequestBody Map<String, String> jsonData) {
 
@@ -81,7 +68,7 @@ public class UserController {
 		return jsonObj.toString();
 	}
 
-	@RequestMapping("/login/{phoneNo}/{pwd}")
+	@RequestMapping("/login/phoneNo/{phoneNo}/pwd/{pwd}")
 	public @ResponseBody String checkPwd(ModelMap modelMap, @PathVariable String phoneNo, @PathVariable String pwd) {
 
 		logger.info("enter checkPwd method.");
