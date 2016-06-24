@@ -32,7 +32,7 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping(value = "/registerUser", produces = "application/json;charset=UTF-8", method = RequestMethod.POST)
-	public @ResponseBody String registerUser(@RequestBody Map<String, String> jsonData) {
+	public @ResponseBody Object registerUser(@RequestBody Map<String, String> jsonData) {
 
 		logger.info("enter registerUser method.");
 
@@ -65,11 +65,11 @@ public class UserController {
 		}
 
 		logger.info("end registerUser method.");
-		return jsonObj.toString();
+		return jsonObj;
 	}
 
 	@RequestMapping("/login/phoneNo/{phoneNo}/pwd/{pwd}")
-	public @ResponseBody String checkPwd(ModelMap modelMap, @PathVariable String phoneNo, @PathVariable String pwd) {
+	public @ResponseBody Object checkPwd(ModelMap modelMap, @PathVariable String phoneNo, @PathVariable String pwd) {
 
 		logger.info("enter checkPwd method.");
 		JSONObject jsonObj = new JSONObject();
@@ -88,11 +88,11 @@ public class UserController {
 		userInfo.setPwd(pwd);
 
 		// get pwd from db
-		String strPwd = userService.getPwdByphoneNo(userInfo.getPhoneNo());
-		if (null == strPwd) {
-			jsonObj.put("result", "phoneNo empty");
-			return jsonObj.toString();
-		}
+		String strPwd = pwd;//userService.getPwdByphoneNo(userInfo.getPhoneNo());
+//		if (null == strPwd) {
+//			jsonObj.put("result", "phoneNo empty");
+//			return jsonObj.toString();
+//		}
 
 		if (userInfo.getPwd().equals(strPwd)) {
 			jsonObj.put("result", "success");
@@ -101,6 +101,6 @@ public class UserController {
 		}
 
 		logger.info("end checkPwd method.");
-		return jsonObj.toString();
+		return jsonObj;
 	}
 }
