@@ -11,6 +11,8 @@
 
 	<!-- 自动扫描controller包下的所有类，如果@Controller注入为bean -->
 	<context:component-scan base-package="com.huaan.shop.controller" />
+	<mvc:annotation-driven/>
+	<mvc:default-servlet-handler />
 
 	<!-- 避免IE执行AJAX时,返回JSON出现下载文件 -->
 	<bean id="mappingJacksonHttpMessageConverter"
