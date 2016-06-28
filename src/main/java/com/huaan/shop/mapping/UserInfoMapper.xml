@@ -84,7 +84,7 @@
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 
-	<resultMap type="com.huaan.shop.model.UserInfo" id="UserCourseMap"
+	<!-- <resultMap type="com.huaan.shop.model.UserInfo" id="UserCourseMap"
 		extends="BaseResultMap">
 		<collection property="courseInfos" javaType="list"
 			ofType="com.huaan.shop.model.CourseInfo">
@@ -94,14 +94,14 @@
 		</collection>
 
 
-	</resultMap>
-	<select id="selectAll" resultMap="UserCourseMap">
+	</resultMap> -->
+<!-- 	<select id="selectAll" resultMap="UserCourseMap">
 		select u.id, u.uname,
 		u.unumber, c.id course_id, c.cname, c.caddress from user_info u left
 		join course_user_info cu on u.id = cu.uid
 		left join course_info c on
 		cu.cid = c.id
-	</select>
+	</select> -->
 	
 	
 	<insert id="registerUser" parameterType="com.huaan.shop.model.UserInfo">
