@@ -1,17 +1,27 @@
 package com.huaan.shop.controller;
 
+import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.huaan.shop.model.MyPersonalInfo;
+import com.huaan.shop.service.MyPersonalService;
 
 @Controller
 @RequestMapping("/myPersonalInfo")
 public class MyPersonalInfoController {
+	
+    private static Logger logger = Logger.getLogger(MyPersonalInfoController.class);
+	
+	@Autowired
+	private MyPersonalService myPersonalInfoService;
 
 	/**
 	 * 获取我的购物车
@@ -19,9 +29,12 @@ public class MyPersonalInfoController {
 	 * @param jsonData
 	 * @return
 	 */
-	@RequestMapping("/getMyShoppingCart")
-	public @ResponseBody String getMyShoppingCart(@RequestBody Map<String, String> jsonData) {
-		return null;
+	@RequestMapping("/getMyShoppingCart/{userID}")
+	public @ResponseBody Object getMyShoppingCart(@PathVariable int userID) {
+		logger.info("enter the getMyProperty method");
+		List<MyPersonalInfo> infos = myPersonalInfoService.getMyShoppingCart(userID);
+		logger.info("end the getMyProperty method");
+		return infos;
 	}
 
 	/**
@@ -30,9 +43,12 @@ public class MyPersonalInfoController {
 	 * @param jsonData
 	 * @return
 	 */
-	@RequestMapping("/getMyPendingOrder")
-	public @ResponseBody String getMyPendingOrder(@RequestBody Map<String, String> jsonData) {
-		return null;
+	@RequestMapping("/getMyPendingOrder/{userID}")
+	public @ResponseBody Object getMyPendingOrder(@PathVariable int userID) {
+		logger.info("enter the getMyProperty method");
+		List<MyPersonalInfo> infos = myPersonalInfoService.getbuyOrderInfo_Pending(userID);
+		logger.info("end the getMyProperty method");
+		return infos;
 	}
 
 	/**
@@ -41,9 +57,12 @@ public class MyPersonalInfoController {
 	 * @param jsonData
 	 * @return
 	 */
-	@RequestMapping("/getMyOrder")
-	public @ResponseBody String getMyOrder(@RequestBody Map<String, String> jsonData) {
-		return null;
+	@RequestMapping("/getMyOrder/{userID}")
+	public @ResponseBody Object getMyOrder(@PathVariable int userID) {
+		logger.info("enter the getMyProperty method");
+		List<MyPersonalInfo> infos = myPersonalInfoService.getbuyOrderInfo(userID);
+		logger.info("end the getMyProperty method");
+		return infos;
 	}
 
 	/**
@@ -52,8 +71,8 @@ public class MyPersonalInfoController {
 	 * @param jsonData
 	 * @return
 	 */
-	@RequestMapping("/getMyPostedTopic")
-	public @ResponseBody String getMyPostedTopic(@RequestBody Map<String, String> jsonData) {
+	@RequestMapping("/getMyPostedTopic/{userID}")
+	public @ResponseBody String getMyPostedTopic(@PathVariable int userID) {
 		return null;
 	}
 
@@ -63,8 +82,8 @@ public class MyPersonalInfoController {
 	 * @param jsonData
 	 * @return
 	 */
-	@RequestMapping("/getMyParticipativeTopic")
-	public @ResponseBody String getMyParticipativeTopic(@RequestBody Map<String, String> jsonData) {
+	@RequestMapping("/getMyParticipativeTopic/{userID}")
+	public @ResponseBody String getMyParticipativeTopic(@PathVariable int userID) {
 		return null;
 	}
 
@@ -74,8 +93,11 @@ public class MyPersonalInfoController {
 	 * @param jsonData
 	 * @return
 	 */
-	@RequestMapping("/getMyProperty")
-	public @ResponseBody String getMyProperty(@RequestBody Map<String, String> jsonData) {
-		return null;
+	@RequestMapping("/getMyProperty/{userID}")
+	public @ResponseBody Object getMyProperty(@PathVariable int userID) {
+		logger.info("enter the getMyProperty method");
+		List<MyPersonalInfo> infos = myPersonalInfoService.getHouseInfo(userID);
+		logger.info("end the getMyProperty method");
+		return infos;
 	}
 }

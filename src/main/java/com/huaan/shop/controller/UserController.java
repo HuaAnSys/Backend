@@ -1,6 +1,5 @@
 package com.huaan.shop.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -83,24 +82,21 @@ public class UserController {
 			return jsonObj.toString();
 		}
 
-		UserInfo userInfo = new UserInfo();
-		userInfo.setPhoneNo(phoneNo);
-		userInfo.setPwd(pwd);
-
-		// get pwd from db
-		String strPwd = pwd;//userService.getPwdByphoneNo(userInfo.getPhoneNo());
-//		if (null == strPwd) {
-//			jsonObj.put("result", "phoneNo empty");
-//			return jsonObj.toString();
-//		}
-
-		if (userInfo.getPwd().equals(strPwd)) {
-			jsonObj.put("result", "success");
-		} else {
-			jsonObj.put("result", "failed");
+		// get info from db
+		UserInfo userInfo = new UserInfo();		
+		userInfo = userService.getInfoByphoneNo(phoneNo);
+		if (null == userInfo || null == userInfo.getPwd()) {
+			jsonObj.put("result", "phoneNo not registed");
+			return jsonObj.toString();
+		}
+		if (!userInfo.getPwd().equals(pwd)) {
+			jsonObj.put("result", "pwd unmatch");
+			return jsonObj.toString();
 		}
 
 		logger.info("end checkPwd method.");
+		jsonObj.put("result", "success");
+		jsonObj.put("userinfo", userInfo);
 		return jsonObj;
 	}
 }

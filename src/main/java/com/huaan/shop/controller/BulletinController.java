@@ -1,30 +1,54 @@
 package com.huaan.shop.controller;
 
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.alibaba.fastjson.JSONObject;
+import com.huaan.shop.common.FileUpload;
+import com.huaan.shop.model.BulletinInfo;
+import com.huaan.shop.service.BulletinService;
 
 @Controller
 @RequestMapping("/bulletin")
 public class BulletinController {
+	
+	private static Logger logger = Logger.getLogger(BulletinController.class);
 
-	// @Autowired
-	// private CommunityAnnouncementService communityAnnounceService;
+	 @Autowired
+	 private BulletinService bulletinService;
 
 	/**
 	 * 获取所有社区公告
 	 * @return
 	 */
 	@RequestMapping("/getBulletins")
-	public @ResponseBody String getBulletins() {
-		// List<CommunityAnnouncement> cas =
-		// communityAnnounceService.getCommunityAnnouncement();
-		return null;
+	public @ResponseBody Object getBulletins() {
+		
+		logger.info("enter getBulletins method."); 
+		
+		JSONObject jsonObj = new JSONObject();
+		
+		List<BulletinInfo> bulletins = bulletinService.getBulletins();
+		
+		jsonObj.put("count", 556);
+		jsonObj.put("result", "Y");
+		
+		logger.info("end getBulletins method.");
+		
+		return bulletins;
 	}
 
 	/**
@@ -33,11 +57,15 @@ public class BulletinController {
 	 * @return
 	 */
 	@RequestMapping(value = "getBulletinComments/{bulletinID}")
-	public @ResponseBody String getBulletinComments(@PathVariable int bulletinID) {
-
-		// get the comments from database
-
-		return null;
+	public @ResponseBody List<BulletinInfo> getBulletinComments(@PathVariable int bulletinID) {
+		
+		logger.info("enter getBulletinComments method."); 
+		System.out.println("bulletinID = " + bulletinID); 
+		
+		List<BulletinInfo> bulletin_comments = bulletinService.getbulletin_comments(bulletinID);
+		
+		logger.info("end getBulletinComments method.");
+		return bulletin_comments;
 	}
 
 	/**
@@ -46,11 +74,15 @@ public class BulletinController {
 	 * @return
 	 */
 	@RequestMapping(value = "getBulletinLike/{bulletinID}")
-	public @ResponseBody String getBulletinLike(@PathVariable int bulletinID) {
+	public @ResponseBody List<BulletinInfo> getBulletinLike(@PathVariable int bulletinID,@PathVariable int userID) { //RTN String to List
 
-		// get the like from database
-
-		return null;
+		logger.info("enter getBulletinLike method."); 
+		
+		List<BulletinInfo> bulletinLikes = bulletinService.getbulletinLike(bulletinID);
+		
+		logger.info("end getBulletinLike method.");
+		
+		return bulletinLikes;
 	}
 
 	/**
@@ -60,16 +92,33 @@ public class BulletinController {
 	 */
 	@RequestMapping(value = "setBulletinLike", method = RequestMethod.POST)
 	public @ResponseBody String setBulletinLike(@RequestBody Map<String, String> jsonData) {
-
-		// BulletinLike bulletinLike = new BulletinLike();
-		// bulletinLike.setLikeTime(System.currentTimeMillis());
-
-		String phoneNo = jsonData.get("phoneNo");
-
-		// get the user id according to user phone number and save it to
-		// bulletinLike.setUserID(phoneNo);
-
-		return null;
+		
+		logger.info("enter setBulletinLike method."); 
+		System.out.println("The jsonData is" + jsonData); 
+		
+		JSONObject jsonObj = new JSONObject();
+		
+		if (null == jsonData.get("userID") || null == jsonData.get("bulletinID")) {
+			jsonObj.put("result", "paramater null");
+			return jsonObj.toString(); 
+		}
+		
+		int userID = Integer.parseInt(jsonData.get("userID"));
+		int bulletinID = Integer.parseInt(jsonData.get("bulletinID"));
+		
+		BulletinInfo binfo = new BulletinInfo();
+		binfo.setBulletin_l_bulletinID(bulletinID);
+		binfo.setBulletin_l_userID(userID);
+		
+		if(1 == bulletinService.setbulletinLike(binfo)){
+			jsonObj.put("result", "success");             	
+        } else {
+        	jsonObj.put("result", "failed"); 
+        }
+		
+		logger.info("end setBulletinLike method.");
+		
+		return jsonObj.toString(); 
 	}
 
 	/**
@@ -80,16 +129,82 @@ public class BulletinController {
 	@RequestMapping(value = "setBulletinComment", method = RequestMethod.POST)
 	public @ResponseBody String setBulletinComment(@RequestBody Map<String, String> jsonData) {
 
-		// BulletinLike bulletinLike = new BulletinLike();
-		// bulletinLike.setLikeTime(System.currentTimeMillis());
+//		test data
+//		{
+//		    "commentDetail": "社区広告コメント１",
+//		    "bulletinID": "1",
+//		    "userID": "1"
+//		}
+		
+		logger.info("enter setBulletinComment method."); 
+		System.out.println("The jsonData is" + jsonData); 
+		
+        JSONObject jsonObj = new JSONObject();
+		
+		if (null == jsonData.get("commentDetail") || null == jsonData.get("bulletinID") || null == jsonData.get("userID")) {
+			jsonObj.put("result", "paramater null");
+			return jsonObj.toString(); 
+		}
+		
+		String commentDetail = jsonData.get("commentDetail");
+		int bulletinID = Integer.parseInt(jsonData.get("bulletinID"));
+		int userID = Integer.parseInt(jsonData.get("userID"));
+		
+		BulletinInfo binfo = new BulletinInfo();
+		binfo.setCommentDetail(commentDetail);
+		binfo.setBulletin_c_bulletinID(bulletinID);
+		binfo.setBulletin_c_userID(userID);
+		
+		if(1 == bulletinService.setbulletinComment(binfo)){
+			jsonObj.put("result", "success");             	
+        } else {
+        	jsonObj.put("result", "failed"); 
+        }
+		
+		logger.info("end setBulletinComment method.");
 
-		String phoneNo = jsonData.get("phoneNo");
-		String comment = jsonData.get("comment");
+		return jsonObj.toString(); 
+	}
+	
+	/**
+	 * 增加社区公告评论
+	 * @param jsonData
+	 * @return
+	 */
+	@RequestMapping(value = "setBulletin", method = RequestMethod.POST)
+	public @ResponseBody String setBulletin(@RequestParam(value = "file") MultipartFile file, HttpServletRequest request) {
+		
+		logger.info("enter setBulletin method."); 
+		
+        JSONObject jsonObj = new JSONObject();
+		
+		if (null == request.getParameter("content") || null == request.getParameter("uploaderName")) {
+			jsonObj.put("result", "paramater null");
+			return jsonObj.toString(); 
+		}
+		
+		// 画像ダウンロード
+		FileUpload fileupload = new FileUpload();
+		if (!fileupload.uploadPicToNginx(file, "Bulletin")) {
+			jsonObj.put("result", "pic null");
+			return jsonObj.toString();
+		}
+		
+		// Bulletinデータ作成
+		BulletinInfo binfo = new BulletinInfo();
+		binfo.setContent(request.getParameter("content"));
+		binfo.setUploaderName(request.getParameter("uploaderName"));
+		binfo.setPicName(fileupload.getFILE_NAME());
+		
+		if(1 == bulletinService.setbulletin(binfo)){
+			jsonObj.put("result", "success");             	
+        } else {
+        	jsonObj.put("result", "failed"); 
+        }
+		
+		logger.info("end setBulletin method.");
 
-		// get the user id according to user phone number and save it to
-		// bulletinLike.setUserID(phoneNo);
-
-		return null;
+		return jsonObj.toString(); 
 	}
 
 }

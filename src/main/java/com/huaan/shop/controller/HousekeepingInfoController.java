@@ -28,13 +28,8 @@ public class HousekeepingInfoController {
 	
 	@RequestMapping(value="/getHousekeepingInfo", method = RequestMethod.GET)
 	public @ResponseBody List<HousekeepingInfo> getAllHousekeepingInfo(){
-		
 		logger.info("enter the getAllHousekeepingInfo method");
-		
 		List<HousekeepingInfo> housekeepingInfos = hoursekeepInfoService.getAllHousekeepingInfo();
-		
-		logger.info("end the getAllHousekeepingInfo method");
-		
 		return housekeepingInfos;
 	}
 }
