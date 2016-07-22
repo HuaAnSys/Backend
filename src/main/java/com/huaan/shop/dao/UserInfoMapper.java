@@ -25,7 +25,7 @@ public interface UserInfoMapper {
     // check user exist
     UserInfo selectByIcd(String icd);
     
-    // check pwd by telno
-    String selectPwdByphoneNo(String phoneNo);
+    // select all by telno
+    UserInfo selectInfoByphoneNo(String phoneNo);
 
 }

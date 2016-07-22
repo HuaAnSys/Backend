@@ -130,8 +130,10 @@
 		from user
 		where identifierNo = #{identifierNo,jdbcType=VARCHAR}
 	</select>
-	<select id="selectPwdByphoneNo" resultType="java.lang.String" parameterType="java.lang.String">
-		select pwd from user
+	<select id="selectInfoByphoneNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select  
+		<include refid="Base_Column_List" />
+		from user
 		where phoneNo = #{phoneNo,jdbcType=VARCHAR}
 	</select>
 </mapper>

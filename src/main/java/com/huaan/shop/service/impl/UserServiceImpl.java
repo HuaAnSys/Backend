@@ -53,8 +53,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String getPwdByphoneNo(String phoneNo) {
-		return userInfoMapper.selectPwdByphoneNo(phoneNo);
+	public UserInfo getInfoByphoneNo(String phoneNo) {
+		return userInfoMapper.selectInfoByphoneNo(phoneNo);
 	}
 
 }

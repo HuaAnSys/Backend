@@ -24,5 +24,5 @@ public interface UserService {
 	UserInfo getUserByIcd(String icd);
 	
 	// check pwd by telno
-	String getPwdByphoneNo(String phoneNo);
+	UserInfo getInfoByphoneNo(String phoneNo);
 }
