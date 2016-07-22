@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huaan.shop.dao.PropertyManagementInfoMapper">
+	<resultMap id="BaseResultMap" type="com.huaan.shop.model.PropertyManagementInfo">
+		<result column="id" property="reportfixId" jdbcType="INTEGER" />
+		<result column="content" property="reportfixContent" jdbcType="VARCHAR" />
+		<result column="picName" property="reportfixPicName" jdbcType="VARCHAR" />
+		<result column="repor_time" property="reportfixreportTime" jdbcType="VARCHAR" />
+		<result column="statue" property="reportfixStatue" jdbcType="INTEGER" />
+		<result column="resolve_time" property="reportfixResolveTime" jdbcType="VARCHAR" />
+		<result column="reply" property="reportfixReply" jdbcType="VARCHAR" />
+		<result column="userID" property="reportfixUserID" jdbcType="INTEGER" />
+
+		<result column="visitId" property="visitId" jdbcType="INTEGER" />
+		<result column="visitName" property="visitName" jdbcType="VARCHAR" />
+		<result column="visitSex" property="visitSex" jdbcType="VARCHAR" />
+		<result column="visitTime" property="visitTime" jdbcType="VARCHAR" />
+		<result column="visitBarCodeTime" property="visitBarCodeTime" jdbcType="VARCHAR" />
+		<result column="visitStatue" property="visitStatue" jdbcType="INTEGER" />
+		<result column="visitUserID" property="visitUserID" jdbcType="INTEGER" />
+
+		<result column="complainId" property="complainId" jdbcType="INTEGER" />
+		<result column="complainContent" property="complainContent" jdbcType="VARCHAR" />
+		<result column="complainPicName" property="complainPicName" jdbcType="VARCHAR" />
+		<result column="complainReportTime" property="complainReportTime" jdbcType="VARCHAR" />
+		<result column="complainStatue" property="complainStatue" jdbcType="INTEGER" />
+		<result column="complainResolveTime" property="complainResolveTime" jdbcType="VARCHAR" />
+		<result column="complainUserID" property="complainUserID" jdbcType="VARCHAR" />
+		<result column="complainUserID" property="complainUserID" jdbcType="INTEGER" />
+
+	</resultMap>
+	<sql id="Base_Column_List">
+		id
+		,content
+		,picName
+		,repor_time
+		,statue
+		,resolve_time
+		,reply
+		,userID
+	</sql>
+	<select id="getClaimedRepairs" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from report_fix
+	</select>
+
+	<insert id="createNewRepair" parameterType="com.huaan.shop.model.PropertyManagementInfo">
+	   insert into report_fix (
+		 content
+		,picName
+		,repor_time
+		,statue
+		,resolve_time
+		,reply
+		,userID
+	   ) values (
+		#{reportfixId,jdbcType=INTEGER}
+		,#{reportfixContent,jdbcType=VARCHAR}
+		,#{reportfixPicName,jdbcType=VARCHAR}
+		,curdate()
+		,#{reportfixStatue,jdbcType=INTEGER}
+		,''
+		,''
+		,#{reportfixUserID,jdbcType=INTEGER}
+	   )
+	</insert>
+
+	<select id="getCustomers" resultMap="BaseResultMap">
+		select
+		  id visitId
+		 ,visit_name visitName
+		 ,sex visitSex 
+		 ,visit_time visitTime
+		 ,barCode_time visitBarCodeTime
+		 ,status visitStatue
+		 ,userID visitUserID
+		from visit
+	</select>
+
+	<select id="getComplain" resultMap="BaseResultMap">
+	    select
+		 id complainId
+		 ,content complainContent
+		 ,picName complainPicName
+		 ,report_time complainReportTime
+		 ,statue complainStatue
+		 ,resolve_time complainResolveTime
+		 ,reply complainReply
+		 ,userID complainUserID
+		from complain
+	</select>
+
+	<insert id="createNewCustomer" parameterType="com.huaan.shop.model.PropertyManagementInfo">
+		insert into visit (
+		  visit_name
+		 ,sex
+		 ,visit_time
+		 ,barCode_time
+		 ,status
+		 ,userID
+		) values (
+		 ,#{visitName,jdbcType=VARCHAR},
+		 ,#{visitSex,jdbcType=VARCHAR},
+		 ,curdate(),
+		 ,#{visitBarCodeTime,jdbcType=VARCHAR},
+		 ,#{visitStatue,jdbcType=INTEGER}
+		 ,#{visitUserID,jdbcType=INTEGER}
+		)
+	</insert>
+
+	<insert id="createNewComplain" parameterType="com.huaan.shop.model.PropertyManagementInfo">
+		insert into visit (
+		 content
+		 ,picName
+		 ,report_time
+		 ,statue
+		 ,resolve_time
+		 ,reply
+		 ,userID
+		) values (
+		 #{complainContent,jdbcType=VARCHAR}
+		 ,#{complainPicName,jdbcType=VARCHAR}
+		 ,curdate()
+		 ,#{complainStatue,jdbcType=INTEGER}
+		 ,''
+		 ,''
+		 ,#{complainUserID,jdbcType=INTEGER}
+		)
+	</insert>
+
+</mapper>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huaan.shop.dao.ProductInfoMapper">
+	<resultMap id="BaseResultMap" type="com.huaan.shop.model.ProductInfo">
+		<result column="productId" property="productId" jdbcType="INTEGER" />
+		<result column="productCategoryId" property="productCategoryId" jdbcType="INTEGER" />
+		<result column="picName" property="picName" jdbcType="VARCHAR" />
+		<result column="hotProduct" property="hotProduct" jdbcType="VARCHAR" />
+		<result column="advisedProduct" property="advisedProduct" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="quantity" property="quantity" jdbcType="INTEGER" />
+		<result column="uploadTime" property="uploadTime" jdbcType="VARCHAR" />	
+		<result column="productCategoryName" property="productCategoryName" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap id="HotProductMap" type="com.huaan.shop.model.ProductInfo">
+		<result column="productId" property="productId" jdbcType="INTEGER" />
+		<result column="productCategoryId" property="productCategoryId" jdbcType="INTEGER" />
+		<result column="picName" property="picName" jdbcType="VARCHAR" />
+		<result column="hotProduct" property="hotProduct" jdbcType="VARCHAR" />
+		<result column="advisedProduct" property="advisedProduct" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="quantity" property="quantity" jdbcType="INTEGER" />
+		<result column="uploadTime" property="uploadTime" jdbcType="VARCHAR" />	
+	</resultMap>
+	<sql id="Base_Column_List">
+		id
+		,picName
+		,hotProduct
+		,advisedProduct
+		,status
+		,quantity
+		,uploadTime
+	</sql>
+
+	<select id="SelectHotProducts" resultMap="HotProductMap">
+		select
+		id productId
+		,productCategoryID
+		,picName
+		,hotProduct
+		,advisedProduct
+		,status
+		,quantity
+		,uploadTime
+		from product
+		where hotProduct = 'Y'
+	</select>
+
+	<select id="getProduct" resultMap="BaseResultMap">
+		select
+			product.id productId
+			,productCategoryId
+			,productCategory.categoryName productCategoryName
+			,picName
+			,hotProduct
+			,advisedProduct
+			,status
+			,quantity
+			,uploadTime
+		from product, productCategory
+		where product.productCategoryID = productCategory.id 
+		and product.id = #{productId,jdbcType=INTEGER}
+	</select>
+
+	<resultMap id="ProductCategoryResultMap" type="com.huaan.shop.model.ProductInfo">
+		<result column="id" property="productCategoryId" jdbcType="INTEGER" />
+		<result column="categoryName" property="productCategoryName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="ProductCategoryList">
+		id
+		,categoryName
+	</sql>
+	<select id="getCategory" resultMap="ProductCategoryResultMap">
+		select
+		<include refid="ProductCategoryList" />
+		from productCategory
+	</select>
+	
+	<select id="getProducts" resultMap="BaseResultMap">
+		select
+			product.id productId
+			,productCategoryId
+			,productCategory.categoryName 
+			,picName
+			,hotProduct
+			,advisedProduct
+			,status
+			,quantity
+			,uploadTime
+		from product, productCategory
+		where product.productCategoryID = productCategory.id 
+		and productCategory.id = #{productCategoryId,jdbcType=INTEGER}
+	</select>
+	
+	<resultMap id="ProductCommentsResultMap" type="com.huaan.shop.model.ProductInfo">
+	    <result column="id" property="productcommentId" jdbcType="INTEGER" />
+	    <result column="userId" property="userId" jdbcType="INTEGER" />
+		<result column="productID" property="productId" jdbcType="INTEGER" />
+		<result column="commentDetail" property="commentDetail" jdbcType="VARCHAR" />
+		<result column="commentLevel" property="commentLevel" jdbcType="INTEGER" />
+		<result column="commentTime" property="commentTime" jdbcType="VARCHAR" />
+		
+	</resultMap>
+	<select id="getProductComments" resultMap="ProductCommentsResultMap">
+		select 
+			productID  
+		    ,commentDetail           
+			,commentLevel            
+			,commentTime   
+			,productID as id          
+		from productcomment
+		where productID  = #{productID,jdbcType=INTEGER}
+	</select>
+	
+	<insert id="addProduct2cart" parameterType="com.huaan.shop.model.ProductInfo">
+		insert into shoppingcart (id,
+		userID, itemID,createTime,ordered
+		)
+		values (#{shoppingcartId,jdbcType=INTEGER},
+		#{userId,jdbcType=INTEGER},
+		#{itemId,jdbcType=INTEGER},
+		curdate(),
+		#{ordered,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<!-- 添加商品评价 -->
+	<insert id="insProductcomment" parameterType="com.huaan.shop.model.ProductInfo">
+		insert into productcomment 
+		(
+		 userID
+		，productID
+		，commentDetail
+		，commentLevel
+		，commentTime
+		)
+		values 
+		(#{userID,jdbcType=INTEGER}
+		,#{productID,jdbcType=INTEGER}
+		,#{commentDetail,jdbcType=VARCHAR}
+		,#{commentLevel,jdbcType=VARCHAR}
+		,SYSDATE()
+		)
+	</insert>
+	
+</mapper>

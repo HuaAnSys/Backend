@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huaan.shop.dao.MyPersonalInfoMapper">
+	<resultMap id="BaseResultMap" type="com.huaan.shop.model.MyPersonalInfo">	
+		<result column="id" property="id" jdbcType="INTEGER" />
+		<result column="block_num" property="block_num" jdbcType="VARCHAR" />
+		<result column="unit_num" property="unit_num" jdbcType="VARCHAR" />
+		<result column="floor_num" property="floor_num" jdbcType="VARCHAR" />
+		<result column="area_num" property="area_num" jdbcType="VARCHAR" />		
+		<result column="buy_time" property="buy_time" jdbcType="VARCHAR" />
+		<result column="live_in_time" property="live_in_time" jdbcType="VARCHAR" />
+		<result column="door_num" property="door_num" jdbcType="VARCHAR" />
+		<result column="userID" property="userID" jdbcType="INTEGER" />
+				
+		<result column="buyOrder_id" property="buyOrder_id" jdbcType="INTEGER" />
+		<result column="order_num" property="order_num" jdbcType="VARCHAR" />
+		<result column="cart_id" property="cart_id" jdbcType="INTEGER" />
+		<result column="order_time" property="order_time" jdbcType="VARCHAR" />
+		<result column="pay_time" property="pay_time" jdbcType="VARCHAR" />		
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="buyOrder_userID" property="buyOrder_userID" jdbcType="INTEGER" />
+		<result column="pay_type" property="pay_type" jdbcType="VARCHAR" />
+		<result column="payNum" property="payNum" jdbcType="VARCHAR" />	
+		
+		<result column="shoppingcart_id" property="shoppingcart_id" jdbcType="INTEGER" />
+		<result column="shoppingcart_userID" property="shoppingcart_userID" jdbcType="INTEGER" />
+		<result column="shoppingcart_itemID" property="shoppingcart_itemID" jdbcType="INTEGER" />
+		<result column="shoppingcart_createTime" property="shoppingcart_createTime" jdbcType="VARCHAR" />
+		<result column="shoppingcart_ordered" property="shoppingcart_ordered" jdbcType="VARCHAR" />		
+		
+	</resultMap>
+	
+	<sql id="community_announcement_List">
+		id
+	</sql>
+	
+	<!-- 获取个人房屋信息 -->
+	<select id="selHouseInfo" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+			id 
+			,block_num
+			,unit_num
+			,floor_num
+			,area_num
+			,buy_time
+			,live_in_time
+			,door_num
+			,userID
+		from house_info
+		where userID = #{userID,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 获取我的订单 -->
+	<select id="selbuyOrderInfo" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+			id buyOrder_id
+			,order_num
+			,cart_id
+			,order_time
+			,pay_time
+			,status
+			,userID buyOrder_userID
+			,pay_type
+			,payNum
+		from buyOrder
+		where userID = #{userID,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 获取我的待付款订单 -->
+	<select id="selbuyOrderInfo_Pending" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+			id buyOrder_id
+			,order_num
+			,cart_id
+			,order_time
+			,pay_time
+			,status
+			,userID buyOrder_userID
+			,pay_type
+			,payNum
+		from buyOrder
+		where userID = #{userID,jdbcType=INTEGER}
+		and status = 0
+	</select>
+	
+	<!-- 获取我的购物车 -->
+	<select id="selMyShoppingCart" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+			id      shoppingcart_id
+			,userID shoppingcart_userID
+			,itemID shoppingcart_itemID
+			,createTime shoppingcart_createTime
+			,ordered    shoppingcart_ordered
+		from shoppingcart
+		where userID = #{userID,jdbcType=INTEGER}		
+	</select>
+	
+	
+	
+</mapper>

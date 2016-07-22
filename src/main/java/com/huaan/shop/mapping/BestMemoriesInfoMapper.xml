@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huaan.shop.dao.BestMemoriesInfoMapper">
+	<resultMap id="BaseResultMap" type="com.huaan.shop.model.BestMemoriesInfo">	
+		<result column="best_memories_id" property="best_memories_id" jdbcType="INTEGER" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="picName" property="picName" jdbcType="VARCHAR" />
+		<result column="uploaderName" property="uploaderName" jdbcType="VARCHAR" />
+		<result column="uploadTime" property="uploadTime" jdbcType="VARCHAR" />
+		
+		<result column="best_memories_c_id" property="best_memories_c_id" jdbcType="INTEGER" />
+		<result column="commentDetail" property="commentDetail" jdbcType="VARCHAR" />
+		<result column="commentTime" property="commentTime" jdbcType="VARCHAR" />
+		<result column="best_memories_c_best_memoriesID" property="best_memories_c_best_memoriesID" jdbcType="INTEGER" />
+		<result column="best_memories_c_userID" property="best_memories_c_userID" jdbcType="INTEGER" />
+		
+		<result column="best_memories_l_id" property="best_memories_l_id" jdbcType="INTEGER" />
+		<result column="like_time" property="like_time" jdbcType="VARCHAR" />
+		<result column="best_memories_l_userID" property="best_memories_l_userID" jdbcType="INTEGER" />
+		<result column="best_memories_l_best_memoriesID" property="best_memories_l_best_memoriesID" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="community_announcement_List">
+		id
+		,content
+		,picName
+		,uploaderName
+		,uploadTime
+	</sql>
+	
+	<!-- 获取所有精彩回顾  -->
+	<select id="selAllBestMemories" resultMap="BaseResultMap">
+		select
+			id best_memories_id
+			,content
+			,picName
+			,uploaderName
+			,uploadTime
+		from best_memories
+	</select>
+	
+	<!-- 获取精彩回顾评论-->
+	<select id="selAllBestMemories_C" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	    select 
+		    bm.id best_memories_id
+		    ,bm.content
+		    ,bm.picName
+		    ,bm.uploaderName
+		    ,bm.uploadTime
+		    ,bm_c.id best_memories_c_id
+		    ,bm_c.commentDetail
+		    ,bm_c.commentTime
+		    ,bm_c.best_memoriesID best_memories_c_best_memoriesID
+		    ,bm_c.userID best_memories_c_userID
+		from best_memories bm
+		    ,best_memories_comments bm_c
+		where bm.id = bm_c.best_memoriesID	
+		and bm.id = #{best_memories_id,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 获取精彩回顾点赞  -->
+	<select id="selAllBestMemories_L" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	    select 
+		    bm.id best_memories_id
+		    ,bm.content
+		    ,bm.picName
+		    ,bm.uploaderName
+		    ,bm.uploadTime
+		    ,bm_c.id best_memories_l_id
+		    ,bm_c.like_time
+		    ,bm_c.userID best_memories_l_userID
+		    ,bm_c.best_memoriesID best_memories_l_best_memoriesID
+		from best_memories bm
+		    ,best_memories_like bm_l
+		where bm.id = bm_l.best_memoriesID	
+		and bm.id = #{best_memories_id,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 精彩回顾点赞  -->
+	<insert id="insBestMemories_L" parameterType="com.huaan.shop.model.BestMemoriesInfo">
+		insert into best_memories_like 
+		(like_time
+		,userID
+		,best_memoriesID
+		)
+		values 
+		(SYSDATE()
+		,#{best_memories_l_userID,jdbcType=INTEGER}
+		,#{best_memories_l_best_memoriesID,jdbcType=INTEGER}
+		)
+	</insert>
+	
+	<!-- 精彩回顾增加评论   --> 
+	<insert id="insBestMemories_C" parameterType="com.huaan.shop.model.BestMemoriesInfo">
+		insert into best_memories_comments
+		(commentDetail
+		,commentTime
+		,best_memoriesID
+		,userID
+		)
+		values 
+		(
+		#{commentDetail,jdbcType=VARCHAR}
+		,SYSDATE()
+		,#{best_memories_c_best_memoriesID,jdbcType=INTEGER}
+		,#{best_memories_c_userID,jdbcType=INTEGER}
+		)
+	</insert>
+	
+	<!-- 精彩回顾增加   --> 
+	<insert id="insBestMemories" parameterType="com.huaan.shop.model.BestMemoriesInfo">
+		insert into best_memories
+		(content
+		,picName
+		,uploaderName
+		,uploadTime
+		)
+		values 
+		(
+		#{content,jdbcType=VARCHAR}
+		,#{picName,jdbcType=VARCHAR}
+		,#{uploaderName,jdbcType=VARCHAR}
+		,SYSDATE()
+		)
+	</insert>
+	
+</mapper>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huaan.shop.dao.BulletinInfoMapper">
+	<resultMap id="BaseResultMap" type="com.huaan.shop.model.BulletinInfo">
+		<result column="bulletin_id" property="bulletin_id" jdbcType="INTEGER" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="picName" property="picName" jdbcType="VARCHAR" />
+		<result column="uploaderName" property="uploaderName" jdbcType="VARCHAR" />
+		<result column="uploadTime" property="uploadTime" jdbcType="VARCHAR" />
+		
+		<result column="bulletin_c_id" property="bulletin_c_id" jdbcType="INTEGER" />
+		<result column="commentDetail" property="commentDetail" jdbcType="VARCHAR" />
+		<result column="commentTime" property="commentTime" jdbcType="VARCHAR" />
+		<result column="bulletin_c_bulletinID" property="bulletin_c_bulletinID" jdbcType="INTEGER" />
+		<result column="bulletin_c_userID" property="bulletin_c_userID" jdbcType="INTEGER" />
+		
+		<result column="bulletin_l_id" property="bulletin_l_id" jdbcType="INTEGER" />
+		<result column="like_time" property="like_time" jdbcType="VARCHAR" />
+		<result column="bulletin_l_userID" property="bulletin_l_userID" jdbcType="INTEGER" />
+		<result column="bulletin_l_bulletinID" property="bulletin_l_bulletinID" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="community_announcement_List">
+		id
+		,content
+		,picName
+		,uploaderName
+		,uploadTime
+	</sql>
+	
+	<!-- 获取所有社区公告 -->
+	<select id="selBulletins" resultMap="BaseResultMap">
+		select
+			id bulletin_id
+			,content
+			,picName
+			,uploaderName
+			,uploadTime
+		from bulletin
+	</select>
+	
+	<!-- 获取社区公告评论 -->
+	<select id="selbulletin_comments" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select 
+		    bul.id bulletin_id
+		    ,bul.content
+		    ,bul.picName
+		    ,bul.uploaderName
+		    ,bul.uploadTime
+		    ,bul_c.id bulletin_c_id
+		    ,bul_c.commentDetail
+		    ,bul_c.commentTime
+		    ,bul_c.userID
+		from bulletin bul
+		    ,bulletin_comments bul_c
+		where bul.id = bul_c.bulletinID	
+		and bul.id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 获取社区评论点赞 -->
+	<select id="selbulletinLike" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	select 
+		    bul.id bulletin_id
+		    ,bul.content
+		    ,bul.picName
+		    ,bul.uploaderName
+		    ,bul.uploadTime
+		    ,bul_like.id bulletin_l_id
+		    ,bul_like.like_time
+		    ,bul_like.userID bulletin_l_userID
+		    ,bul_like.bulletinID bulletin_l_bulletinID
+		from bulletin bul
+		    ,bulletin_like bul_like
+		where bul.id = bul_like.bulletinID	
+		and bul.id = #{id,jdbcType=INTEGER}
+		<!--
+		select 
+		    bul.id bulletin_id
+		    ,bul.content
+		    ,bul.picName
+		    ,bul.uploaderName
+		    ,bul.uploadTime
+		    ,bul_c.id bulletin_c_id
+		    ,bul_c.commentDetail
+		    ,bul_c.commentTime
+		    ,bul_c.userID bulletin_c_userID
+		    ,bul_like.id bulletin_l_id
+		    ,bul_like.like_time
+		    ,bul_like.userID bulletin_l_userID
+		    ,bul_like.bulletinID bulletin_l_bulletinID
+		from bulletin bul
+		    ,bulletin_comments bul_c
+		    ,bulletin_like bul_like
+		where bul.id = bul_c.bulletinID	
+		and bul.id = bul_like.bulletinID	
+		and bul.id = #{id,jdbcType=INTEGER}
+		-->
+	</select>
+	
+	<insert id="insbulletinLike" parameterType="com.huaan.shop.model.BulletinInfo">
+		insert into bulletin_like 
+		(like_time
+		,userID
+		,bulletinID
+		)
+		values 
+		(SYSDATE()
+		,#{bulletin_l_userID,jdbcType=INTEGER}
+		,#{bulletin_l_bulletinID,jdbcType=INTEGER}
+		)
+	</insert>
+	
+	<insert id="insbulletinComment" parameterType="com.huaan.shop.model.BulletinInfo">
+		insert into bulletin_comments
+		(commentDetail
+		,commentTime
+		,bulletinID
+		,userID
+		)
+		values 
+		(
+		#{commentDetail,jdbcType=VARCHAR}
+		,SYSDATE()
+		,#{bulletin_c_bulletinID,jdbcType=INTEGER}
+		,#{bulletin_c_userID,jdbcType=INTEGER}
+		)
+	</insert>
+	
+	<insert id="insbulletin" parameterType="com.huaan.shop.model.BulletinInfo">
+		insert into bulletin
+		(content
+		,picName
+		,uploaderName
+		,uploadTime
+		)
+		values 
+		(
+		#{content,jdbcType=VARCHAR}
+		,#{picName,jdbcType=VARCHAR}
+		,#{uploaderName,jdbcType=VARCHAR}
+		,SYSDATE()
+		)
+	</insert>
+	
+</mapper>

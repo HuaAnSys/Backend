@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huaan.shop.dao.ActityAlarmInfoMapper">
+	<resultMap id="BaseResultMap" type="com.huaan.shop.model.ActityAlarmInfo">
+	
+		<result column="alarm_id" property="alarm_id" jdbcType="INTEGER" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="picName" property="picName" jdbcType="VARCHAR" />
+		<result column="alarm_userId" property="alarm_userId" jdbcType="INTEGER" />
+		<result column="createTime" property="createTime" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		
+		<result column="alarm_c_id" property="alarm_c_id" jdbcType="INTEGER" />
+		<result column="commentDetail" property="commentDetail" jdbcType="VARCHAR" />
+		<result column="commentTime" property="commentTime" jdbcType="VARCHAR" />
+		<result column="alarm_c_activity_alarmId" property="alarm_c_activity_alarmId" jdbcType="INTEGER" />
+		<result column="alarm_c_userID" property="alarm_c_userID" jdbcType="INTEGER" />
+		
+		<result column="alarm_l_id" property="alarm_l_id" jdbcType="INTEGER" />
+		<result column="like_time" property="like_time" jdbcType="VARCHAR" />
+		<result column="alarm_l_userID" property="alarm_l_userID" jdbcType="INTEGER" />
+		<result column="alarm_l_activityAlarmId" property="alarm_l_activityAlarmId" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="community_announcement_List">
+		id
+		,content
+		,picName
+		,uploaderName
+		,uploadTime
+	</sql>
+	
+	<!-- 获取所有征集令 -->
+	<select id="selAllActityAlarm" resultMap="BaseResultMap">
+		select
+			alarm.id alarm_id
+			,alarm.content
+			,alarm.picName
+			,alarm.userId alarm_userId
+			,alarm.createTime
+			,user.name
+		from activity_alarm alarm
+		    ,user
+		where alarm.userId = user.id
+	</select>
+	
+	<!-- 征集令发帖 -->
+	<insert id="insActityAlarm" parameterType="com.huaan.shop.model.ActityAlarmInfo">
+		insert into activity_alarm 
+		(content
+		,picName
+		,userId
+		,createTime
+		)
+		values 
+		(#{content,jdbcType=VARCHAR}
+		,#{picName,jdbcType=VARCHAR}
+		,#{alarm_userId,jdbcType=INTEGER}
+		,SYSDATE()
+		)
+	</insert>
+	
+	<!-- 获取征集令评论  -->
+	<select id="selAlarmcomments" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	select 
+		    alarm.id alarm_id
+		    ,alarm.content
+		    ,alarm.picName
+		    ,alarm.userId
+		    ,alarm.createTime
+		    ,alarm_c.id alarm_c_id
+		    ,alarm_c.commentDetail
+		    ,alarm_c.commentTime
+		    ,alarm_c.userID alarm_c_userID
+		    ,alarm_c.activity_alarmID alarm_c_activity_alarmId
+		from activity_alarm alarm
+		    ,activity_alarm_comments alarm_c
+		where alarm.id = alarm_c.activity_alarmID	
+		and alarm.id = #{alarm_id,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 获取征集令点赞  -->
+	<select id="selAlarmLike" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	select 
+		    alarm.id alarm_id
+		    ,alarm.content
+		    ,alarm.picName
+		    ,alarm.userId alarm_userId
+		    ,alarm.createTime
+		    ,alarm_like.id alarm_l_id
+		    ,alarm_like.like_time
+		    ,alarm_like.userID alarm_l_userID
+		    ,alarm_like.activityAlarmId alarm_l_activityAlarmId
+		from activity_alarm alarm
+		    ,activity_alarm_like alarm_like
+		where alarm.id = alarm_like.activityAlarmId	
+		and alarm.id = #{alarm_id,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 征集令点赞  -->
+	<insert id="insAlarmlike" parameterType="com.huaan.shop.model.ActityAlarmInfo">
+		insert into activity_alarm_like 
+		(like_time
+		,userID
+		,activityAlarmId
+		)
+		values 
+		(SYSDATE()
+		,#{alarm_l_userID,jdbcType=INTEGER}
+		,#{alarm_l_activityAlarmId,jdbcType=INTEGER}
+		)
+	</insert>
+	
+	<!-- 征集令增加评论   --> 
+	<insert id="insAlarmcomment" parameterType="com.huaan.shop.model.ActityAlarmInfo">
+		insert into activity_alarm_comments
+		(commentDetail
+		,commentTime
+		,activity_alarmID
+		,userID
+		)
+		values 
+		(
+		#{commentDetail,jdbcType=VARCHAR}
+		,SYSDATE()
+		,#{alarm_c_activity_alarmId,jdbcType=INTEGER}
+		,#{alarm_c_userID,jdbcType=INTEGER}
+		)
+	</insert>
+	
+</mapper>

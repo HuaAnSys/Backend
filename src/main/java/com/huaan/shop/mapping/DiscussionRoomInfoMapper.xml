@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huaan.shop.dao.DiscussionRoomInfoMapper">
+	<resultMap id="BaseResultMap" type="com.huaan.shop.model.DiscussionRoomInfo">
+		<result column="id" property="discussionRoomId" jdbcType="INTEGER" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="picName" property="picName" jdbcType="VARCHAR" />
+		<result column="userId" property="userId" jdbcType="INTEGER" />
+		<result column="createTime" property="createTime" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id
+		,content
+		,picName
+		,userId
+		,createTime
+	</sql>
+	<select id="getCommunityAnnouncement" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from discussion_room
+	</select>
+
+	<resultMap id="DiscussionCommentsResultMap" type="com.huaan.shop.model.DiscussionRoomInfo">
+		<result column="id" property="discussionRoomCommentsId" jdbcType="INTEGER" />
+		<result column="commentDetail" property="commentDetail" jdbcType="VARCHAR" />
+		<result column="commentTime" property="commentTime" jdbcType="VARCHAR" />
+		<result column="discussion_roomID" property="discussionRoomId" jdbcType="INTEGER" />
+		<result column="userId" property="userId" jdbcType="INTEGER" />
+	</resultMap>
+
+	<select id="getDiscussionComments" resultMap="DiscussionCommentsResultMap">
+		select
+		id,
+		commentDetail,
+		commentTime,
+		discussion_roomID,
+		userId
+		from discussion_room_comments
+		where discussion_room_comments.id = #{discussionRoomCommentsId,jdbcType=INTEGER}
+	</select>
+
+
+	<resultMap id="DiscussionLikeResultMap" type="com.huaan.shop.model.DiscussionRoomInfo">
+		<result column="id" property="discussionRoomLikeId" jdbcType="INTEGER" />
+		<result column="like_time" property="likeTime" jdbcType="VARCHAR" />
+		<result column="discussionId" property="discussionId" jdbcType="INTEGER" />
+		<result column="userId" property="userId" jdbcType="INTEGER" />
+	</resultMap>
+
+	<select id="getDiscussionLike" resultMap="DiscussionLikeResultMap">
+		select
+		id,
+		like_time,
+		userID,
+		discussionId
+		from discussion_room_like
+		where discussion_room_like.id = #{discussionRoomLikeId,jdbcType=INTEGER}
+	</select>
+
+	<insert id="setDiscussionLike" parameterType="com.huaan.shop.model.DiscussionRoomInfo">
+		insert into discussion_room_like (
+		 like_time
+		,userID
+		,discussionId
+		)
+		values 
+		(
+		jdbcType=INTEGER}
+		,curdate()
+		,#{userID,jdbcType=INTEGER}
+		,#{discussionId,jdbcType=INTEGER}
+		)
+	</insert>
+
+
+	<insert id="setDiscussionComment" parameterType="com.huaan.shop.model.DiscussionRoomInfo">
+		insert into discussion_room_comments (
+		 commentDetail
+		 ,commentTime
+		 ,discussion_roomID
+		 ,userID
+		)
+		values 
+		(
+		 #{commentDetail,jdbcType=VARCHAR}
+		,curdate()
+		,#{discussionRoomID,jdbcType=INTEGER}
+		,#{userID,jdbcType=INTEGER}
+		)
+	</insert>
+	
+	<!-- 追加新数据 -->
+	<insert id="insNewDiscussion" parameterType="com.huaan.shop.model.DiscussionRoomInfo">
+		insert into discussion_room 
+		(content
+		,picName
+		,userId
+		,createTime
+		)
+		values 
+		(#{content,jdbcType=VARCHAR}
+		,#{picName,jdbcType=VARCHAR}
+		,#{discussionRoomId,jdbcType=INTEGER}
+		,SYSDATE()
+		)
+	</insert>
+</mapper>
