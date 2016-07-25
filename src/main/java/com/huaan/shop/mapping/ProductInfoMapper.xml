@@ -42,6 +42,8 @@
 		,status
 		,quantity
 		,uploadTime
+		,price
+		,productName
 		from product
 		where hotProduct = 'Y'
 	</select>
