@@ -55,19 +55,12 @@
 	<!-- 获取社区评论点赞 -->
 	<select id="selbulletinLike" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 	select 
-		    bul.id bulletin_id
-		    ,bul.content
-		    ,bul.picName
-		    ,bul.uploaderName
-		    ,bul.uploadTime
-		    ,bul_like.id bulletin_l_id
+		     bul_like.id bulletin_l_id
 		    ,bul_like.like_time
 		    ,bul_like.userID bulletin_l_userID
 		    ,bul_like.bulletinID bulletin_l_bulletinID
-		from bulletin bul
-		    ,bulletin_like bul_like
-		where bul.id = bul_like.bulletinID	
-		and bul.id = #{id,jdbcType=INTEGER}
+		from bulletin_like bul_like
+		where bul_like.bulletinID = #{id,jdbcType=INTEGER}	
 		<!--
 		select 
 		    bul.id bulletin_id
@@ -90,6 +83,15 @@
 		and bul.id = bul_like.bulletinID	
 		and bul.id = #{id,jdbcType=INTEGER}
 		-->
+	</select>
+	
+	<select id="userLikeBOrNot" parameterType = "com.huaan.shop.model.BulletinInfo" resultMap="BaseResultMap">
+		select 
+			likeC.userID bulletin_l_userID
+		   ,likeC.bulletinID bulletin_l_bulletinID
+		from bulletin_like likeC
+		where likeC.userID = #{bulletin_l_bulletinID,jdbcType = INTEGER}
+		and likeC.bulletinID = #{bulletin_l_userID,jdbcType = INTEGER}
 	</select>
 	
 	<insert id="insbulletinLike" parameterType="com.huaan.shop.model.BulletinInfo">

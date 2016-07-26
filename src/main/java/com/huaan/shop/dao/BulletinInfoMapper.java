@@ -23,5 +23,8 @@ public interface BulletinInfoMapper {
 
 	// 增加社区公告评论
 	int insbulletin(BulletinInfo bulletinInfo);
+	
+	// 获取改user是否为bulletin点过赞
+	List<BulletinInfo> userLikeBOrNot(BulletinInfo bulletinInfo);
 
 }

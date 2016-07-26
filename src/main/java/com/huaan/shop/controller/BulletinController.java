@@ -1,5 +1,6 @@
 package com.huaan.shop.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -73,16 +74,28 @@ public class BulletinController {
 	 * @param bulletinID
 	 * @return
 	 */
-	@RequestMapping(value = "getBulletinLike/{bulletinID}")
-	public @ResponseBody List<BulletinInfo> getBulletinLike(@PathVariable int bulletinID,@PathVariable int userID) { //RTN String to List
-
+	@RequestMapping(value = "getBulletinLike/{bulletinID}/{userID}")
+	public @ResponseBody Map getBulletinLike(@PathVariable int bulletinID,@PathVariable int userID) { //RTN String to List
+		System.out.println("bulletinID = " + bulletinID +"---userID" +userID); 
 		logger.info("enter getBulletinLike method."); 
 		
 		List<BulletinInfo> bulletinLikes = bulletinService.getbulletinLike(bulletinID);
 		
+		BulletinInfo bulletinInfo = new BulletinInfo();
+		bulletinInfo.setBulletin_l_bulletinID(bulletinID);
+		bulletinInfo.setBulletin_l_userID(userID);
+		List<BulletinInfo> userLikeBulletinOrNot = bulletinService.getUserLikeBOrNot(bulletinInfo);
+		System.out.println("like or not " + userLikeBulletinOrNot.size()); 
+		Map resultMap = new HashMap();
+		resultMap.put("likeNum",bulletinLikes.size());
+		if(userLikeBulletinOrNot.size()>0){
+			resultMap.put("likeOrNot",'Y');
+		}else{
+			resultMap.put("likeOrNot",'N');
+		}
 		logger.info("end getBulletinLike method.");
-		
-		return bulletinLikes;
+		resultMap.put("status","success");
+		return resultMap;
 	}
 
 	/**
