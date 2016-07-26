@@ -62,7 +62,7 @@ public class ShoppingMallController {
 	 * @param jsonData
 	 * @return
 	 */
-	@RequestMapping(value = "/getProduct/{productID}", method = RequestMethod.POST)
+	@RequestMapping(value = "getProduct", method = RequestMethod.POST)
 	public @ResponseBody List<ProductInfo> getProductByID(@RequestBody Map<String, String> jsonData) {
 
 		logger.info("enter into getProductByID method");
