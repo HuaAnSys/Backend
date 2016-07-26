@@ -89,6 +89,8 @@
 			,status
 			,quantity
 			,uploadTime
+			,productName
+			,price
 		from product, productCategory
 		where product.productCategoryID = productCategory.id 
 		and productCategory.id = #{productCategoryId,jdbcType=INTEGER}
