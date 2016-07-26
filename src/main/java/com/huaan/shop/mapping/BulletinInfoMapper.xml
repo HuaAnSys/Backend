@@ -41,22 +41,15 @@
 	<!-- 获取社区公告评论 -->
 	<select id="selbulletin_comments" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select 
-		    bul.id bulletin_id
-		    ,bul.content
-		    ,bul.picName
-		    ,bul.uploaderName
-		    ,bul.uploadTime
-		    ,bul_c.id bulletin_c_id
+		     bul_c.id bulletin_c_id
 		    ,bul_c.commentDetail
 		    ,bul_c.commentTime
 		    ,bul_c.userID
 		    ,user.nickName
-		from bulletin bul
-		    ,bulletin_comments bul_c
+		from bulletin_comments bul_c
 		    ,user user
-		where bul.id = bul_c.bulletinID	
-		and bul_c.userID = user.id
-		and bul.id = #{id,jdbcType=INTEGER}
+		where bul_c.userID = user.id
+		and bul_c.bulletinID = #{id,jdbcType=INTEGER}
 	</select>
 	
 	<!-- 获取社区评论点赞 -->
