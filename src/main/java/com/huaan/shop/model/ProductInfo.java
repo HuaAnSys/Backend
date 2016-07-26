@@ -16,6 +16,15 @@ public class ProductInfo {
 	private String uploadTime;
 	private String productName;
 	private String price;
+	private String kinds;
+
+	public String getKinds() {
+		return kinds;
+	}
+
+	public void setKinds(String kinds) {
+		this.kinds = kinds;
+	}
 
 	public String getProductName() {
 		return productName;

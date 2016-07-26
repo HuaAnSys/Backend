@@ -11,6 +11,9 @@
 		<result column="quantity" property="quantity" jdbcType="INTEGER" />
 		<result column="uploadTime" property="uploadTime" jdbcType="VARCHAR" />	
 		<result column="productCategoryName" property="productCategoryName" jdbcType="VARCHAR" />
+		<result column="productName" property="productName" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="VARCHAR" />
+		<result column="kinds" property="kinds" jdbcType="VARCHAR" />
 	</resultMap>
 	<resultMap id="HotProductMap" type="com.huaan.shop.model.ProductInfo">
 		<result column="productId" property="productId" jdbcType="INTEGER" />
@@ -21,6 +24,9 @@
 		<result column="status" property="status" jdbcType="VARCHAR" />
 		<result column="quantity" property="quantity" jdbcType="INTEGER" />
 		<result column="uploadTime" property="uploadTime" jdbcType="VARCHAR" />	
+		<result column="productName" property="productName" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="VARCHAR" />
+		<result column="kinds" property="kinds" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		id
@@ -59,6 +65,9 @@
 			,status
 			,quantity
 			,uploadTime
+			,productName
+			,price
+			,kinds
 		from product, productCategory
 		where product.productCategoryID = productCategory.id 
 		and product.id = #{productId,jdbcType=INTEGER}
