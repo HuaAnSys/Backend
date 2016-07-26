@@ -50,9 +50,12 @@
 		    ,bul_c.commentDetail
 		    ,bul_c.commentTime
 		    ,bul_c.userID
+		    ,user.nickName
 		from bulletin bul
 		    ,bulletin_comments bul_c
+		    ,user user
 		where bul.id = bul_c.bulletinID	
+		and bul_c.userID = user.id
 		and bul.id = #{id,jdbcType=INTEGER}
 	</select>
 	

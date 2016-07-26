@@ -22,7 +22,22 @@ public class BulletinInfo {
 	private Integer bulletin_l_userID;
 	private Integer bulletin_l_bulletinID;
 	
+	//user表
+	private Integer userID;
+	private String nickName;
 	
+	public Integer getUserID() {
+		return userID;
+	}
+	public void setUserID(Integer userID) {
+		this.userID = userID;
+	}
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
 	public Integer getBulletin_id() {
 		return bulletin_id;
 	}
