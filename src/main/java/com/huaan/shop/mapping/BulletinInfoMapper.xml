@@ -123,6 +123,12 @@
 		)
 	</insert>
 	
+	<delete id="removeBulletinLike" parameterType="com.huaan.shop.model.BulletinInfo">
+		delete from bulletin_like
+		where userID=#{bulletin_l_userID,jdbcType=INTEGER}
+		and bulletinID=#{bulletin_l_bulletinID,jdbcType=INTEGER}
+	</delete>
+	
 	<insert id="insbulletin" parameterType="com.huaan.shop.model.BulletinInfo">
 		insert into bulletin
 		(content

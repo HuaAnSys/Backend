@@ -27,4 +27,6 @@ public interface BulletinInfoMapper {
 	// 获取改user是否为bulletin点过赞
 	List<BulletinInfo> userLikeBOrNot(BulletinInfo bulletinInfo);
 
+	int removeBulletinLike(BulletinInfo bulletinInfo);
+
 }

@@ -61,5 +61,11 @@ public class BulletinServiceImpl implements BulletinService {
 	public List<BulletinInfo> getUserLikeBOrNot(BulletinInfo bulletinInfo) {
 		// TODO Auto-generated method stub
 		return bulletinInfoMapper.userLikeBOrNot(bulletinInfo);
+	}
+
+	@Override
+	public int removebulletinLike(BulletinInfo bulletinInfo) {
+		// TODO Auto-generated method stub
+		return bulletinInfoMapper.removeBulletinLike(bulletinInfo);
 	}	
 	}

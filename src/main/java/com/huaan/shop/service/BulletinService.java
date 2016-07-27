@@ -29,7 +29,10 @@ public interface BulletinService {
  // 增加社区公告评论
  	int setbulletin(BulletinInfo bulletinInfo);
 
-	List<BulletinInfo> getUserLikeBOrNot(BulletinInfo bulletinInfo);	
+ //获得当前用户是否点赞	
+	List<BulletinInfo> getUserLikeBOrNot(BulletinInfo bulletinInfo);
+	
+	int removebulletinLike(BulletinInfo bulletinInfo);
     
     
 	

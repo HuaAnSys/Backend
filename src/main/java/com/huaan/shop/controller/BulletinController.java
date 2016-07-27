@@ -138,11 +138,23 @@ public class BulletinController {
 		binfo.setBulletin_l_bulletinID(bulletinID);
 		binfo.setBulletin_l_userID(userID);
 		
-		if(1 == bulletinService.setbulletinLike(binfo)){
-			jsonObj.put("result", "success");             	
-        } else {
-        	jsonObj.put("result", "failed"); 
-        }
+		String likeFlag = jsonData.get("likeFlag");
+		
+		if("Y".equals(likeFlag)){
+			System.out.println("remove like"); 
+			if(1 == bulletinService.removebulletinLike(binfo)){
+				jsonObj.put("result", "success");             	
+	        } else {
+	        	jsonObj.put("result", "failed"); 
+	        }
+		}else{
+			System.out.println("insert like"); 
+			if(1 == bulletinService.setbulletinLike(binfo)){
+				jsonObj.put("result", "success");             	
+	        } else {
+	        	jsonObj.put("result", "failed"); 
+	        }
+		}
 		
 		logger.info("end setBulletinLike method.");
 		
