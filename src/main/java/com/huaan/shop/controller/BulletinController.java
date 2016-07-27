@@ -57,16 +57,31 @@ public class BulletinController {
 	 * @param bulletinID
 	 * @return
 	 */
-	@RequestMapping(value = "getBulletinComments/{bulletinID}")
-	public @ResponseBody List<BulletinInfo> getBulletinComments(@PathVariable int bulletinID) {
+	@RequestMapping(value = "getBulletinComments/{bulletinID}/{userID}")
+	public @ResponseBody Map getBulletinComments(@PathVariable int bulletinID,@PathVariable int userID) {
 		
 		logger.info("enter getBulletinComments method."); 
 		System.out.println("bulletinID = " + bulletinID); 
-		
+		Map resultMap = new HashMap();
 		List<BulletinInfo> bulletin_comments = bulletinService.getbulletin_comments(bulletinID);
+		resultMap.put("comments",bulletin_comments);
+		List<BulletinInfo> bulletinLikes = bulletinService.getbulletinLike(bulletinID);
+		resultMap.put("likeNum",bulletinLikes.size());
+		
+		BulletinInfo bulletinInfo = new BulletinInfo();
+		bulletinInfo.setBulletin_l_bulletinID(bulletinID);
+		bulletinInfo.setBulletin_l_userID(userID);
+		List<BulletinInfo> userLikeBulletinOrNot = bulletinService.getUserLikeBOrNot(bulletinInfo);
+		if(userLikeBulletinOrNot.size()>0){
+			resultMap.put("likeOrNot",'Y');
+		}else{
+			resultMap.put("likeOrNot",'N');
+		}
+		logger.info("end getBulletinLike method.");
+		resultMap.put("status","success");
 		
 		logger.info("end getBulletinComments method.");
-		return bulletin_comments;
+		return resultMap;
 	}
 
 	/**
