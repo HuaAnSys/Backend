@@ -2,6 +2,7 @@ package com.huaan.shop.dao;
 
 import java.util.List;
 
+import com.huaan.shop.model.MyPersonalInfo;
 import com.huaan.shop.model.ProductInfo;
 
 public interface ProductInfoMapper {
@@ -26,4 +27,6 @@ public interface ProductInfoMapper {
 
 	// 添加商品评价
 	int insProductcomment(ProductInfo productInfo);
+
+	List<ProductInfo> selMyShoppingCart(int userID);
 }

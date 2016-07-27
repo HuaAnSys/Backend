@@ -3,6 +3,7 @@ package com.huaan.shop.service;
 import java.util.List;
 
 import com.huaan.shop.model.MyPersonalInfo;
+import com.huaan.shop.model.ProductInfo;
 
 /**
  * 
@@ -21,7 +22,7 @@ public interface MyPersonalService {
 	List<MyPersonalInfo> getbuyOrderInfo_Pending(int userID);
 	
 	// 获取我的购物车
-	List<MyPersonalInfo> getMyShoppingCart(int userID);
+	List<ProductInfo> getMyShoppingCart(int userID);
 	
 	
 }

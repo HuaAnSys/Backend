@@ -89,7 +89,7 @@
 	
 	<!-- 获取我的购物车 -->
 	<select id="selMyShoppingCart" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-		select
+ 		select
 			id      shoppingcart_id
 			,userID shoppingcart_userID
 			,itemID shoppingcart_itemID
@@ -97,6 +97,21 @@
 			,ordered    shoppingcart_ordered
 		from shoppingcart
 		where userID = #{userID,jdbcType=INTEGER}		
+		select 
+			product.id,product.picName,product.productName,product.price,shoppingitems.productKind
+		from  
+			product,shoppingitems
+		where 
+			product.id in(
+			select product_id
+			from shoppingitems 
+			where cart_id in (
+			select id
+			from shoppingcart 
+			where userID='1'
+			)
+			)
+		and product.id = shoppingitems.product_id
 	</select>
 	
 	

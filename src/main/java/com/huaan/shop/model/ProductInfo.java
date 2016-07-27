@@ -17,6 +17,80 @@ public class ProductInfo {
 	private String productName;
 	private String price;
 	private String kinds;
+	
+	//shoppingItem
+	private Integer shoppingItem_id;
+	private Integer shoopingItem_order_id; 
+	private Integer shoopingItem_product_id; 
+	private Integer shoppingItem_cart_id; 
+	private String shoppingItem_add_time; 
+	private Integer shoppingIten_num; 
+	private Integer shoppingItem_status;
+	private String shoppingItem_productKind;
+
+	public String getShoppingItem_productKind() {
+		return shoppingItem_productKind;
+	}
+
+	public void setShoppingItem_productKind(String shoppingItem_productKind) {
+		this.shoppingItem_productKind = shoppingItem_productKind;
+	}
+
+	public Integer getShoppingItem_id() {
+		return shoppingItem_id;
+	}
+
+	public void setShoppingItem_id(Integer shoppingItem_id) {
+		this.shoppingItem_id = shoppingItem_id;
+	}
+
+	public Integer getShoopingItem_order_id() {
+		return shoopingItem_order_id;
+	}
+
+	public void setShoopingItem_order_id(Integer shoopingItem_order_id) {
+		this.shoopingItem_order_id = shoopingItem_order_id;
+	}
+
+	public Integer getShoopingItem_product_id() {
+		return shoopingItem_product_id;
+	}
+
+	public void setShoopingItem_product_id(Integer shoopingItem_product_id) {
+		this.shoopingItem_product_id = shoopingItem_product_id;
+	}
+
+	public Integer getShoppingItem_cart_id() {
+		return shoppingItem_cart_id;
+	}
+
+	public void setShoppingItem_cart_id(Integer shoppingItem_cart_id) {
+		this.shoppingItem_cart_id = shoppingItem_cart_id;
+	}
+
+	public String getShoppingItem_add_time() {
+		return shoppingItem_add_time;
+	}
+
+	public void setShoppingItem_add_time(String shoppingItem_add_time) {
+		this.shoppingItem_add_time = shoppingItem_add_time;
+	}
+
+	public Integer getShoppingIten_num() {
+		return shoppingIten_num;
+	}
+
+	public void setShoppingIten_num(Integer shoppingIten_num) {
+		this.shoppingIten_num = shoppingIten_num;
+	}
+
+	public Integer getShoppingItem_status() {
+		return shoppingItem_status;
+	}
+
+	public void setShoppingItem_status(Integer shoppingItem_status) {
+		this.shoppingItem_status = shoppingItem_status;
+	}
 
 	public String getKinds() {
 		return kinds;
