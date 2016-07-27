@@ -12,7 +12,21 @@ public class MyPersonalInfo {
 	private String live_in_time;
 	private String door_num;
 	private Integer userID;
+	private String phaseNo;
+	private String villageName;
 		
+	public String getPhaseNo() {
+		return phaseNo;
+	}
+	public void setPhaseNo(String phaseNo) {
+		this.phaseNo = phaseNo;
+	}
+	public String getVillageName() {
+		return villageName;
+	}
+	public void setVillageName(String villageName) {
+		this.villageName = villageName;
+	}
 	// 订单表	
 	private Integer buyOrder_id;
 	private String order_num;

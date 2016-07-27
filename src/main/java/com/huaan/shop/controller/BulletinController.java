@@ -147,7 +147,7 @@ public class BulletinController {
 	        } else {
 	        	jsonObj.put("result", "failed"); 
 	        }
-		}else{
+		}else if("N".equals(likeFlag)){
 			System.out.println("insert like"); 
 			if(1 == bulletinService.setbulletinLike(binfo)){
 				jsonObj.put("result", "success");             	

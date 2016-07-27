@@ -11,6 +11,8 @@
 		<result column="live_in_time" property="live_in_time" jdbcType="VARCHAR" />
 		<result column="door_num" property="door_num" jdbcType="VARCHAR" />
 		<result column="userID" property="userID" jdbcType="INTEGER" />
+		<result column="phaseNo" property="phaseNo" jdbcType="VARCHAR" />
+		<result column="villageName" property="villageName" jdbcType="VARCHAR" />
 				
 		<result column="buyOrder_id" property="buyOrder_id" jdbcType="INTEGER" />
 		<result column="order_num" property="order_num" jdbcType="VARCHAR" />
@@ -46,6 +48,8 @@
 			,live_in_time
 			,door_num
 			,userID
+			,phaseNo
+			,villageName
 		from house_info
 		where userID = #{userID,jdbcType=INTEGER}
 	</select>
