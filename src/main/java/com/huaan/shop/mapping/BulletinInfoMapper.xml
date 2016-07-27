@@ -90,8 +90,8 @@
 			likeC.userID bulletin_l_userID
 		   ,likeC.bulletinID bulletin_l_bulletinID
 		from bulletin_like likeC
-		where likeC.userID = #{bulletin_l_bulletinID,jdbcType = INTEGER}
-		and likeC.bulletinID = #{bulletin_l_userID,jdbcType = INTEGER}
+		where likeC.userID = #{bulletin_l_userID,jdbcType = INTEGER}
+		and likeC.bulletinID = #{bulletin_l_bulletinID,jdbcType = INTEGER}
 	</select>
 	
 	<insert id="insbulletinLike" parameterType="com.huaan.shop.model.BulletinInfo">

@@ -61,7 +61,7 @@ public class BulletinController {
 	public @ResponseBody Map getBulletinComments(@PathVariable int bulletinID,@PathVariable int userID) {
 		
 		logger.info("enter getBulletinComments method."); 
-		System.out.println("bulletinID = " + bulletinID); 
+		System.out.println("bulletinID = " + bulletinID +"-----userID = "+userID); 
 		Map resultMap = new HashMap();
 		List<BulletinInfo> bulletin_comments = bulletinService.getbulletin_comments(bulletinID);
 		resultMap.put("comments",bulletin_comments);
