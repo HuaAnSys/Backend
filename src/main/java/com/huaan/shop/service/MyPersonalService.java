@@ -26,6 +26,8 @@ public interface MyPersonalService {
 	List<ProductInfo> getMyShoppingCart(int shoppingcart_userID);
 
 	List<ActityAlarmInfo> getMyPostedTopic(int userID);
+
+	List<ActityAlarmInfo> getParticipate(int userID);
 	
 	
 }

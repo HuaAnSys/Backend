@@ -62,5 +62,13 @@ public class MyPersonalServiceImpl implements MyPersonalService {
 		return postedList;
 	}
 
+	@Override
+	public List<ActityAlarmInfo> getParticipate(int userId) {
+		// TODO Auto-generated method stub
+		List<ActityAlarmInfo> postedList = null;
+		postedList = actityAlarmInfoMapper.getMyParticipateTopic(userId);
+		return postedList;
+	}
+
 	
 }

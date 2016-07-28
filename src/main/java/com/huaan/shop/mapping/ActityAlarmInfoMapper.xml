@@ -160,5 +160,34 @@
 		    
 	</select>
 	
+		<!-- 获得我参与的文章  -->
+	<select id="getMyParticipateTopic" resultMap="postedCollection" parameterType="java.lang.Integer">
+		select  
+			distinct(activity_alarm.id) alarm_id,
+			activity_alarm.content content,
+			activity_alarm.picName picName,
+			activity_alarm.createTime createTime,
+			concat(activity_alarm.id,'-activity') as postedType
+		from 
+			activity_alarm,activity_alarm_comments
+		where 
+			activity_alarm.id = activity_alarm_comments.activity_alarmID
+		and activity_alarm_comments.userID = #{userId,jdbcType=INTEGER}
+		union
+		
+		select 
+			distinct(discussion_room.id) alarm_id,
+			discussion_room.content content,
+			discussion_room.picName picName,
+			discussion_room.createTime createTime,
+			concat(discussion_room.id,'-discussion') as postedType
+		from 
+			discussion_room,discussion_room_comments
+		where 
+			discussion_room.id = discussion_room_comments.discussion_roomID
+		and discussion_room_comments.userID = #{userId,jdbcType=INTEGER}
+		    
+	</select>
+	
 	
 </mapper>

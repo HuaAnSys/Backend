@@ -25,6 +25,8 @@ public interface ActityAlarmInfoMapper {
 	int insAlarmcomment(ActityAlarmInfo actityAlarmInfo);
 
 	List<ActityAlarmInfo> getMyPostedTopic(int userId);
+
+	List<ActityAlarmInfo> getMyParticipateTopic(int userId);
 	
 
 }

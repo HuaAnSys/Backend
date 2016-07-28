@@ -88,8 +88,10 @@ public class MyPersonalInfoController {
 	 * @return
 	 */
 	@RequestMapping("/getMyParticipativeTopic/{userID}")
-	public @ResponseBody String getMyParticipativeTopic(@PathVariable int userID) {
-		return null;
+	public @ResponseBody List getMyParticipativeTopic(@PathVariable int userID) {
+		logger.info("enter get my participate topic method");
+		List<ActityAlarmInfo> participateList = myPersonalInfoService.getParticipate(userID);
+		return participateList;
 	}
 
 	/**
