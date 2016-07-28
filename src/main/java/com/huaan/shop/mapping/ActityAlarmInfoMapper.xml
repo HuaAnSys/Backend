@@ -175,6 +175,19 @@
 		and activity_alarm_comments.userID = #{userId,jdbcType=INTEGER}
 		union
 		
+		select  
+			distinct(activity_alarm.id) alarm_id,
+			activity_alarm.content content,
+			activity_alarm.picName picName,
+			activity_alarm.createTime createTime,
+			concat(activity_alarm.id,'-activity') as flag
+		from 
+			activity_alarm,activity_alarm_like
+		where 
+			activity_alarm.id = activity_alarm_like.activityAlarmId
+		and activity_alarm_like.userId = #{userId,jdbcType=INTEGER}
+		union
+		
 		select 
 			distinct(discussion_room.id) alarm_id,
 			discussion_room.content content,
@@ -186,6 +199,20 @@
 		where 
 			discussion_room.id = discussion_room_comments.discussion_roomID
 		and discussion_room_comments.userID = #{userId,jdbcType=INTEGER}
+		union
+		
+		select 
+			distinct(discussion_room.id) alarm_id,
+			discussion_room.content content,
+			discussion_room.picName picName,
+			discussion_room.createTime createTime,
+			concat(discussion_room.id,'-discussion') as flag
+		from 
+			discussion_room,discussion_room_like
+		where 
+			discussion_room.id = discussion_room_like.discussionId
+		and discussion_room_like.userID = #{userId,jdbcType=INTEGER}
+		
 		    
 	</select>
 	
