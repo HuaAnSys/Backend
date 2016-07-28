@@ -62,4 +62,10 @@ public class ProductServiceImpl implements ProductService {
 		int result = productInfoMapper.insProductcomment(productInfo);
 		return result;
 	}
+	
+	// 获取我的购物车
+	@Override
+	public List<ProductInfo> getMyShoppingCart(int shoppingcart_userID) {
+		return productInfoMapper.selMyShoppingCart(shoppingcart_userID);
+	}	
 }

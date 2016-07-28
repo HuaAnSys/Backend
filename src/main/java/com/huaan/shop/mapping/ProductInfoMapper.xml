@@ -11,6 +11,7 @@
 		<result column="quantity" property="quantity" jdbcType="INTEGER" />
 		<result column="uploadTime" property="uploadTime" jdbcType="VARCHAR" />	
 		<result column="productCategoryName" property="productCategoryName" jdbcType="VARCHAR" />
+		<result column="category_id" property="category_id" jdbcType="INTEGER" />
 		<result column="productName" property="productName" jdbcType="VARCHAR" />
 		<result column="price" property="price" jdbcType="VARCHAR" />
 		<result column="kinds" property="kinds" jdbcType="VARCHAR" />
@@ -22,6 +23,11 @@
 		<result column="shoppingIten_num" property="shoppingIten_num" jdbcType="INTEGER" />
 		<result column="shoppingItem_status" property="shoppingItem_status" jdbcType="INTEGER" />
 		<result column="shoppingItem_productKind" property="shoppingItem_productKind" jdbcType="VARCHAR" />
+		<result column="shoppingcart_id" property="shoppingcart_id" jdbcType="INTEGER" />
+		<result column="shoppingcart_userID" property="shoppingcart_userID" jdbcType="INTEGER" />
+		<result column="shoppingcart_itemID" property="shoppingcart_itemID" jdbcType="INTEGER" />
+		<result column="shoppingcart_createTime" property="shoppingcart_createTime" jdbcType="VARCHAR" />
+		<result column="shoppingcart_ordered" property="shoppingcart_ordered" jdbcType="VARCHAR" />	
 	</resultMap>
 	<resultMap id="HotProductMap" type="com.huaan.shop.model.ProductInfo">
 		<result column="productId" property="productId" jdbcType="INTEGER" />
@@ -35,6 +41,15 @@
 		<result column="productName" property="productName" jdbcType="VARCHAR" />
 		<result column="price" property="price" jdbcType="VARCHAR" />
 		<result column="kinds" property="kinds" jdbcType="VARCHAR" />
+	</resultMap>
+		<resultMap id="getShoppingCartResultMap" type="com.huaan.shop.model.ProductInfo">
+		<result column="productId" property="productId" jdbcType="INTEGER" />
+		<result column="productCategoryId" property="productCategoryId" jdbcType="INTEGER" />
+		<result column="picName" property="picName" jdbcType="VARCHAR" />
+		<result column="productName" property="productName" jdbcType="VARCHAR" />
+		<result column="price" property="price" jdbcType="VARCHAR" />
+		<result column="shoppingItem_num" property="shoppingItem_num" jdbcType="INTEGER" />
+		<result column="shoppingItem_productKind" property="shoppingItem_productKind" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		id
@@ -165,13 +180,15 @@
 	</insert>
 	
 	<!-- 获取我的购物车 -->
-	<select id="selMyShoppingCart" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	<select id="selMyShoppingCart" resultMap="getShoppingCartResultMap" parameterType="java.lang.Integer">
  		select 
+ 		    product.productCategoryID productCategoryId,
  			product.id productId,
  			product.picName picName,
  			product.productName productName,
  			product.price price,
- 			shoppingitems.productKind shoppingItem_productKind
+ 			shoppingitems.productKind shoppingItem_productKind,
+ 			shoppingitems.num shoppingItem_num
 		from  product,shoppingitems
 		where 
 			product.id in(
@@ -180,7 +197,7 @@
 			where cart_id in (
 			select id
 			from shoppingcart 
-			where userID='1'
+			where userID=#{shoppingcart_userID,jdbcType=INTEGER}
 			)
 			)
 			and product.id = shoppingitems.product_id

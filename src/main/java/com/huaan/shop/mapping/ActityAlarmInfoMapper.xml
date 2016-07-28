@@ -21,6 +21,14 @@
 		<result column="alarm_l_userID" property="alarm_l_userID" jdbcType="INTEGER" />
 		<result column="alarm_l_activityAlarmId" property="alarm_l_activityAlarmId" jdbcType="INTEGER" />
 	</resultMap>
+	<resultMap id="postedCollection" type="com.huaan.shop.model.ActityAlarmInfo">
+		<result column="alarm_id" property="alarm_id" jdbcType="INTEGER" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="picName" property="picName" jdbcType="VARCHAR" />
+		<result column="alarm_userId" property="alarm_userId" jdbcType="INTEGER" />
+		<result column="createTime" property="createTime" jdbcType="VARCHAR" />
+		<result column="postedType" property="postedType" jdbcType="VARCHAR" />
+	</resultMap>
 	
 	<sql id="community_announcement_List">
 		id
@@ -127,5 +135,30 @@
 		,#{alarm_c_userID,jdbcType=INTEGER}
 		)
 	</insert>
+	
+	<!-- 获得我发表的文章  -->
+	<select id="getMyPostedTopic" resultMap="postedCollection" parameterType="java.lang.Integer">
+		select 
+			id alarm_id,
+			content content,
+			picName picName,
+			userId alarm_userId,
+			createTime createTime,
+			concat(id,'-activity') as postedType
+		from activity_alarm
+		where userId=#{userId,jdbcType=INTEGER}
+		union
+		select 
+			id alarm_id,
+			content content,
+			picName picName,
+			userId alarm_userId, 
+			createTime createTime,
+			concat(id,'-discussion') as postedType
+		from discussion_room
+		where userId=#{userId,jdbcType=INTEGER}
+		    
+	</select>
+	
 	
 </mapper>

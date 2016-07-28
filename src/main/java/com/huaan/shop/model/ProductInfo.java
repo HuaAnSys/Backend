@@ -4,11 +4,26 @@ public class ProductInfo {
 
 	//category
 	private String productCategoryName;
+	private Integer category_id;
 
 	//product
 	private Integer productId;
 	private Integer productCategoryId;
 	private String picName;
+	
+	//productcomment
+	private Integer productcommentId;
+	private Integer userId;
+	private String commentDetail;
+	private Integer commentLevel;
+	private String commentTime;
+
+	//shoppingcart
+	private Integer shoppingcartId;
+	private Integer itemId;
+	private String createTime;
+	private String ordered;
+	
 	private String hotProduct;
 	private String advisedProduct;
 	private String status;
@@ -24,9 +39,66 @@ public class ProductInfo {
 	private Integer shoopingItem_product_id; 
 	private Integer shoppingItem_cart_id; 
 	private String shoppingItem_add_time; 
-	private Integer shoppingIten_num; 
+	private Integer shoppingItem_num; 
 	private Integer shoppingItem_status;
 	private String shoppingItem_productKind;
+	
+	//shoppingCart
+	// 购物车
+	private Integer shoppingcart_id;
+	private Integer shoppingcart_userID;
+	private Integer shoppingcart_itemID;
+	private String shoppingcart_createTime;
+	private String shoppingcart_ordered;
+	
+	public Integer getCategory_id() {
+		return category_id;
+	}
+
+	public void setCategory_id(Integer category_id) {
+		this.category_id = category_id;
+	}
+
+
+	public Integer getShoppingcart_id() {
+		return shoppingcart_id;
+	}
+
+	public void setShoppingcart_id(Integer shoppingcart_id) {
+		this.shoppingcart_id = shoppingcart_id;
+	}
+
+	public Integer getShoppingcart_userID() {
+		return shoppingcart_userID;
+	}
+
+	public void setShoppingcart_userID(Integer shoppingcart_userID) {
+		this.shoppingcart_userID = shoppingcart_userID;
+	}
+
+	public Integer getShoppingcart_itemID() {
+		return shoppingcart_itemID;
+	}
+
+	public void setShoppingcart_itemID(Integer shoppingcart_itemID) {
+		this.shoppingcart_itemID = shoppingcart_itemID;
+	}
+
+	public String getShoppingcart_createTime() {
+		return shoppingcart_createTime;
+	}
+
+	public void setShoppingcart_createTime(String shoppingcart_createTime) {
+		this.shoppingcart_createTime = shoppingcart_createTime;
+	}
+
+	public String getShoppingcart_ordered() {
+		return shoppingcart_ordered;
+	}
+
+	public void setShoppingcart_ordered(String shoppingcart_ordered) {
+		this.shoppingcart_ordered = shoppingcart_ordered;
+	}
 
 	public String getShoppingItem_productKind() {
 		return shoppingItem_productKind;
@@ -76,12 +148,12 @@ public class ProductInfo {
 		this.shoppingItem_add_time = shoppingItem_add_time;
 	}
 
-	public Integer getShoppingIten_num() {
-		return shoppingIten_num;
+	public Integer getShoppingItem_num() {
+		return shoppingItem_num;
 	}
 
-	public void setShoppingIten_num(Integer shoppingIten_num) {
-		this.shoppingIten_num = shoppingIten_num;
+	public void setShoppingItem_num(Integer shoppingItem_num) {
+		this.shoppingItem_num = shoppingItem_num;
 	}
 
 	public Integer getShoppingItem_status() {
@@ -116,18 +188,6 @@ public class ProductInfo {
 		this.price = price;
 	}
 
-	//productcomment
-	private Integer productcommentId;
-	private Integer userId;
-	private String commentDetail;
-	private Integer commentLevel;
-	private String commentTime;
-
-	//shoppingcart
-	private Integer shoppingcartId;
-	private Integer itemId;
-	private String createTime;
-	private String ordered;
 	
 	public int getProductCategoryId() {
 		return productCategoryId;

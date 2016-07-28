@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.huaan.shop.dao.ActityAlarmInfoMapper;
 import com.huaan.shop.dao.MyPersonalInfoMapper;
 import com.huaan.shop.dao.ProductInfoMapper;
+import com.huaan.shop.model.ActityAlarmInfo;
 import com.huaan.shop.model.MyPersonalInfo;
 import com.huaan.shop.model.ProductInfo;
 import com.huaan.shop.service.MyPersonalService;
@@ -21,7 +23,10 @@ public class MyPersonalServiceImpl implements MyPersonalService {
 
 	@Autowired
 	private MyPersonalInfoMapper myPersonalInfoMapper;
+	@Autowired
 	private ProductInfoMapper productInfoMapper;
+	@Autowired
+	private ActityAlarmInfoMapper actityAlarmInfoMapper;
 
 	// 获取个人房屋信息
 	@Override
@@ -41,10 +46,21 @@ public class MyPersonalServiceImpl implements MyPersonalService {
 		return myPersonalInfoMapper.selbuyOrderInfo(userID);
 	}
 
-	// 获取我的购物车
 	@Override
-	public List<ProductInfo> getMyShoppingCart(int userID) {
-		return productInfoMapper.selMyShoppingCart(userID);
-	}	
-		
+	public List<ProductInfo> getMyShoppingCart(int shoppingcart_userID) {
+		// TODO Auto-generated method stub
+		List<ProductInfo> temp = null;
+		temp = productInfoMapper.selMyShoppingCart(shoppingcart_userID);
+		return temp;
+	}
+
+	@Override
+	public List<ActityAlarmInfo> getMyPostedTopic(int userId) {
+		// TODO Auto-generated method stub
+		List<ActityAlarmInfo> postedList = null;
+		postedList = actityAlarmInfoMapper.getMyPostedTopic(userId);
+		return postedList;
+	}
+
+	
 }

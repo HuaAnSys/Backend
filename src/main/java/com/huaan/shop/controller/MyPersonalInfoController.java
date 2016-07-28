@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.huaan.shop.model.ActityAlarmInfo;
 import com.huaan.shop.model.MyPersonalInfo;
+import com.huaan.shop.model.ProductInfo;
 import com.huaan.shop.service.MyPersonalService;
 
 @Controller
@@ -29,10 +31,10 @@ public class MyPersonalInfoController {
 	 * @param jsonData
 	 * @return
 	 */
-	@RequestMapping("/getMyShoppingCart/{userID}")
-	public @ResponseBody Object getMyShoppingCart(@PathVariable int userID) {
+	@RequestMapping("/getMyShoppingCart/{shoppingcart_userID}")
+	public @ResponseBody Object getMyShoppingCart(@PathVariable int shoppingcart_userID) {
 		logger.info("enter the getMyProperty method");
-		List<MyPersonalInfo> infos = myPersonalInfoService.getMyShoppingCart(userID);
+		List<ProductInfo> infos = myPersonalInfoService.getMyShoppingCart(shoppingcart_userID);
 		logger.info("end the getMyProperty method");
 		return infos;
 	}
@@ -72,8 +74,11 @@ public class MyPersonalInfoController {
 	 * @return
 	 */
 	@RequestMapping("/getMyPostedTopic/{userID}")
-	public @ResponseBody String getMyPostedTopic(@PathVariable int userID) {
-		return null;
+	public @ResponseBody List getMyPostedTopic(@PathVariable int userID) {
+		logger.info("enter get my posted topic method");
+		System.out.println("-----userID----"+userID);
+		List<ActityAlarmInfo> postedList = myPersonalInfoService.getMyPostedTopic(userID);
+		return postedList;
 	}
 
 	/**

@@ -30,4 +30,6 @@ public interface ProductService {
 
 	// 添加商品评价
 	int addProductcomment(ProductInfo productInfo);
+
+	List<ProductInfo> getMyShoppingCart(int shoppingcart_userID);
 }

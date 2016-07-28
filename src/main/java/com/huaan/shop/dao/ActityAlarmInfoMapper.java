@@ -23,6 +23,8 @@ public interface ActityAlarmInfoMapper {
 	
 	// 征集令增加评论
 	int insAlarmcomment(ActityAlarmInfo actityAlarmInfo);
+
+	List<ActityAlarmInfo> getMyPostedTopic(int userId);
 	
 
 }

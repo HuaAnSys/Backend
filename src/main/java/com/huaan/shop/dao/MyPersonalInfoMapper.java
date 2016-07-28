@@ -2,6 +2,7 @@ package com.huaan.shop.dao;
 
 import java.util.List;
 
+import com.huaan.shop.model.ActityAlarmInfo;
 import com.huaan.shop.model.MyPersonalInfo;
 
 public interface MyPersonalInfoMapper {
@@ -17,5 +18,6 @@ public interface MyPersonalInfoMapper {
 
 	// 获取我的购物车
 	List<MyPersonalInfo> selMyShoppingCart(int userID);
+
 
 }

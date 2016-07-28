@@ -28,5 +28,5 @@ public interface ProductInfoMapper {
 	// 添加商品评价
 	int insProductcomment(ProductInfo productInfo);
 
-	List<ProductInfo> selMyShoppingCart(int userID);
+	List<ProductInfo> selMyShoppingCart(int shoppingcart_userID);
 }
