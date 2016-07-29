@@ -16,7 +16,7 @@ public interface DiscussionRoomService {
 	List<DiscussionRoomInfo> getDiscussionComments(int discussionID);
 
 	// 获取某一条议事点赞
-	List<DiscussionRoomInfo> getDiscussionLike(int discussionID);
+	List<DiscussionRoomInfo> getDiscussionLike(DiscussionRoomInfo disInfo);
 
 	// 某一条议事点赞
 	int setDiscussionLike(DiscussionRoomInfo info);

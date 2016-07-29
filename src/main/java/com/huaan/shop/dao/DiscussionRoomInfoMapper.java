@@ -11,7 +11,7 @@ public interface DiscussionRoomInfoMapper {
 	
 	List<DiscussionRoomInfo> getDiscussionComments(int discussionID);
 	
-	List<DiscussionRoomInfo> getDiscussionLike(int discussionID);
+	List<DiscussionRoomInfo> getDiscussionLike(DiscussionRoomInfo discussionRoomInfo);
 
 	int setDiscussionLike(DiscussionRoomInfo communityAnnouncementInfo);
 

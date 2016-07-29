@@ -17,8 +17,32 @@ public class DiscussionRoomInfo {
 	//discussion_room_like
 	private Integer discussionRoomLikeId;
 	private String likeTime;
+	private Integer like_userID;
 	private Integer discussionId;
+
+	//user表
+	private Integer userID;
+	private String nickName;
 	
+	public Integer getLike_userID() {
+		return like_userID;
+	}
+	public void setLike_userID(Integer like_userID) {
+		this.like_userID = like_userID;
+	}
+	
+	public Integer getUserID() {
+		return userID;
+	}
+	public void setUserID(Integer userID) {
+		this.userID = userID;
+	}
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
 	public Integer getDiscussionRoomId() {
 		return discussionRoomId;
 	}

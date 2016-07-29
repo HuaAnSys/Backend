@@ -22,40 +22,44 @@
 	</select>
 
 	<resultMap id="DiscussionCommentsResultMap" type="com.huaan.shop.model.DiscussionRoomInfo">
-		<result column="id" property="discussionRoomCommentsId" jdbcType="INTEGER" />
+		<result column="discussionRoomCommentsId" property="discussionRoomCommentsId" jdbcType="INTEGER" />
 		<result column="commentDetail" property="commentDetail" jdbcType="VARCHAR" />
 		<result column="commentTime" property="commentTime" jdbcType="VARCHAR" />
 		<result column="discussion_roomID" property="discussionRoomId" jdbcType="INTEGER" />
-		<result column="userId" property="userId" jdbcType="INTEGER" />
+		<result column="userID" property="userID" jdbcType="INTEGER" />
+		<result column="nickName" property="nickName" jdbcType="VARCHAR" />
 	</resultMap>
 
-	<select id="getDiscussionComments" resultMap="DiscussionCommentsResultMap">
-		select
-		id,
-		commentDetail,
-		commentTime,
-		discussion_roomID,
-		userId
-		from discussion_room_comments
-		where discussion_room_comments.id = #{discussionRoomCommentsId,jdbcType=INTEGER}
+	<select id="getDiscussionComments" resultMap="DiscussionCommentsResultMap" parameterType="INTEGER">
+		select 
+		     dis_c.id discussionRoomCommentsId
+		    ,dis_c.commentDetail
+		    ,dis_c.commentTime
+		    ,dis_c.userID
+		    ,user.nickName
+		from discussion_room_comments dis_c
+		    ,user user
+		where dis_c.userID = user.id
+		and dis_c.discussion_roomID = #{discussionID,jdbcType=INTEGER}
 	</select>
 
 
 	<resultMap id="DiscussionLikeResultMap" type="com.huaan.shop.model.DiscussionRoomInfo">
-		<result column="id" property="discussionRoomLikeId" jdbcType="INTEGER" />
-		<result column="like_time" property="likeTime" jdbcType="VARCHAR" />
+		<result column="discussionRoomLikeId" property="discussionRoomLikeId" jdbcType="INTEGER" />
+		<result column="likeTime" property="likeTime" jdbcType="VARCHAR" />
 		<result column="discussionId" property="discussionId" jdbcType="INTEGER" />
-		<result column="userId" property="userId" jdbcType="INTEGER" />
+		<result column="like_userID" property="like_userID" jdbcType="INTEGER" />
 	</resultMap>
 
-	<select id="getDiscussionLike" resultMap="DiscussionLikeResultMap">
-		select
-		id,
-		like_time,
-		userID,
-		discussionId
-		from discussion_room_like
-		where discussion_room_like.id = #{discussionRoomLikeId,jdbcType=INTEGER}
+	<select id="getDiscussionLike" resultMap="DiscussionLikeResultMap" parameterType="com.huaan.shop.model.DiscussionRoomInfo">		
+		select 
+			likeC.userID like_userID
+		   ,likeC.discussionId discussionId
+		from 
+			discussion_room_like likeC
+		where 
+			likeC.userID = #{userID,jdbcType = INTEGER}
+			and likeC.discussionId = #{discussionId,jdbcType = INTEGER}
 	</select>
 
 	<insert id="setDiscussionLike" parameterType="com.huaan.shop.model.DiscussionRoomInfo">

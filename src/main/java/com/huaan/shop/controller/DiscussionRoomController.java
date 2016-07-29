@@ -1,5 +1,6 @@
 package com.huaan.shop.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -93,22 +94,35 @@ public class DiscussionRoomController {
 	 * @param communityAnnouncementID
 	 * @return
 	 */
-	@RequestMapping(value = "/getDiscussionComments")
-	public @ResponseBody List<DiscussionRoomInfo> getDiscussionComments(@RequestBody Map<String, String> jsonData) {
-		
+	@RequestMapping(value = "/getDiscussionComments",method = RequestMethod.POST)
+	public @ResponseBody Map getDiscussionComments(@RequestBody Map<String, String> jsonData) {
+		logger.info("enter get discussion comments method.");
 		int discussionID = Integer.valueOf(jsonData.get("discussionID"));
-		
+		int userID = Integer.valueOf(jsonData.get("userID"));
+		Map resultMap = new HashMap();
 		List<DiscussionRoomInfo> discussionComments = service.getDiscussionComments(discussionID);
+		resultMap.put("comments",discussionComments);
 		
-		return discussionComments;
+		DiscussionRoomInfo disRoom  = new DiscussionRoomInfo();
+		disRoom.setUserID(userID);
+		disRoom.setDiscussionId(discussionID);
+		List<DiscussionRoomInfo> discussionLike = service.getDiscussionLike(disRoom);
+		if(discussionLike.size()>0){
+			resultMap.put("likeOrNot",'Y');
+		}else{
+			resultMap.put("likeOrNot",'N');
+		}
+		logger.info("end get collection comments method.");
+		resultMap.put("status","success");
+		return resultMap;
 	}
 
-	/**
+/*	*//**
 	 * 获取某一条议事点赞
 	 * 
 	 * @param communityAnnouncementID
 	 * @return
-	 */
+	 *//*
 	@RequestMapping(value = "getDiscussionLike")
 	public @ResponseBody List<DiscussionRoomInfo> getDiscussionLike(@RequestBody Map<String, String> jsonData) {
 
@@ -119,7 +133,7 @@ public class DiscussionRoomController {
 		List<DiscussionRoomInfo> discussionLike = service.getDiscussionLike(discussionID);
 		
 		return discussionLike;
-	}
+	}*/
 
 	/**
 	 * 点赞给某一条议事

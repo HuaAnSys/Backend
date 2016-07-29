@@ -41,9 +41,9 @@
 	<!-- 获取社区公告评论 -->
 	<select id="selbulletin_comments" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select 
-		     bul_c.id bulletin_c_id
-		    ,bul_c.commentDetail
-		    ,bul_c.commentTime
+		     bul_c.id discussionRoomID
+		    ,bul_c.commentDetail commentDetail
+		    ,bul_c.commentTime commentTime
 		    ,bul_c.userID
 		    ,user.nickName
 		from bulletin_comments bul_c

@@ -26,8 +26,8 @@ public class DiscussionRoomServiceImpl implements DiscussionRoomService{
 	}
 
 	@Override
-	public List<DiscussionRoomInfo> getDiscussionLike(int discussionID) {
-		return mapper.getDiscussionLike(discussionID);
+	public List<DiscussionRoomInfo> getDiscussionLike(DiscussionRoomInfo disInfo) {
+		return mapper.getDiscussionLike(disInfo);
 	}
 
 	@Override
