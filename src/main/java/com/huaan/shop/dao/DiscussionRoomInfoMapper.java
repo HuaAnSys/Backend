@@ -18,5 +18,7 @@ public interface DiscussionRoomInfoMapper {
 	int setDiscussionComment(DiscussionRoomInfo communityAnnouncementInfo);
 	
 	int insNewDiscussion(DiscussionRoomInfo info);
+
+	int removeDiscussionLike(DiscussionRoomInfo communityAnnouncementInfo);
 	
 }

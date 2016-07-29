@@ -33,7 +33,6 @@ public class DiscussionRoomServiceImpl implements DiscussionRoomService{
 	@Override
 	public int setDiscussionLike(DiscussionRoomInfo communityAnnouncementInfo) {
 		int result = mapper.setDiscussionLike(communityAnnouncementInfo);
-		
 		return result;
 	}
 
@@ -47,5 +46,13 @@ public class DiscussionRoomServiceImpl implements DiscussionRoomService{
 	public int setNewDiscussion(DiscussionRoomInfo info) {
 		return mapper.insNewDiscussion(info);
 	}
+
+	@Override
+	public int removeDiscussionLike(DiscussionRoomInfo communityAnnouncementInfo) {
+		// TODO Auto-generated method stub
+		int result = mapper.removeDiscussionLike(communityAnnouncementInfo);
+		return result;
+	}
+
 	
 }

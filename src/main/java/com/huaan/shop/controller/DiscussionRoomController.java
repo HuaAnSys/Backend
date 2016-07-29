@@ -141,26 +141,31 @@ public class DiscussionRoomController {
 	 * @param jsonData
 	 * @return
 	 */
-	@RequestMapping(value = "setDiscussionLike")
+	@RequestMapping(value = "setDiscussionLike",method = RequestMethod.POST)
 	public @ResponseBody String setDiscussionLike(@RequestBody Map<String, String> jsonData) {
 		
-		DiscussionRoomInfo communityAnnouncementInfo = new DiscussionRoomInfo();
-		
-		communityAnnouncementInfo.setDiscussionRoomLikeId(Integer.valueOf(jsonData.get("discussionRoomLikeId")));
-		communityAnnouncementInfo.setUserId(Integer.valueOf(jsonData.get("userID")));
-		communityAnnouncementInfo.setDiscussionId(Integer.valueOf(jsonData.get("discussionId")));
-		
 		JSONObject jsonObj = new JSONObject();
+		DiscussionRoomInfo communityAnnouncementInfo = new DiscussionRoomInfo();
+		communityAnnouncementInfo.setLike_userID(Integer.valueOf(jsonData.get("userID")));
+		communityAnnouncementInfo.setDiscussionId(Integer.valueOf(jsonData.get("discussionID")));
+		String likeFlag = jsonData.get("likeFlag");
+		if("Y".equals(likeFlag)){
+			System.out.println("remove like"); 
+			if(1 == service.removeDiscussionLike(communityAnnouncementInfo)){
+				jsonObj.put("result", "success");             	
+	        } else {
+	        	jsonObj.put("result", "failed"); 
+	        }
+		}else if("N".equals(likeFlag)){
+			System.out.println("insert like"); 
+			if(1 == service.setDiscussionLike(communityAnnouncementInfo)){
+				jsonObj.put("result", "success");             	
+	        } else {
+	        	jsonObj.put("result", "failed"); 
+	        }
+		}
 		
-        // insert user             
-        if (service.setDiscussionLike(communityAnnouncementInfo) == 1) {
-            jsonObj.put("result", "success");             	
-        } else {
-        	jsonObj.put("result", "failed"); 
-        }
-        
         logger.info("end registerUser method."); 
-        
         return jsonObj.toString(); 
 	}
 

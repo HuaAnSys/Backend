@@ -70,13 +70,17 @@
 		)
 		values 
 		(
-		jdbcType=INTEGER}
-		,curdate()
-		,#{userID,jdbcType=INTEGER}
+		 SYSDATE()
+		,#{like_userID,jdbcType=INTEGER}
 		,#{discussionId,jdbcType=INTEGER}
 		)
 	</insert>
 
+	<delete id="removeDiscussionLike" parameterType="com.huaan.shop.model.DiscussionRoomInfo">
+		delete from discussion_room_like
+		where userID=#{like_userID,jdbcType=INTEGER}
+		and discussionId=#{discussionId,jdbcType=INTEGER}
+	</delete>
 
 	<insert id="setDiscussionComment" parameterType="com.huaan.shop.model.DiscussionRoomInfo">
 		insert into discussion_room_comments (

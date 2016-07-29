@@ -23,4 +23,7 @@ public interface DiscussionRoomService {
 
 	// 某一条议事增加评论
 	int setDiscussionComment(DiscussionRoomInfo info);
+
+	int removeDiscussionLike(DiscussionRoomInfo communityAnnouncementInfo);
+
 }
