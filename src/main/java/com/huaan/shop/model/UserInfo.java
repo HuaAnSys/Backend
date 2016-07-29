@@ -10,6 +10,15 @@ public class UserInfo {
 	private String sex;
 	private String pwd;
 	private String nickName;
+	private String user_picName;
+
+	public String getUser_picName() {
+		return user_picName;
+	}
+
+	public void setUser_picName(String user_picName) {
+		this.user_picName = user_picName;
+	}
 
 	public Integer getId() {
 		return id;
