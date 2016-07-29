@@ -92,9 +92,9 @@
 		values 
 		(
 		 #{commentDetail,jdbcType=VARCHAR}
-		,curdate()
+		,SYSDATE()
 		,#{discussionRoomID,jdbcType=INTEGER}
-		,#{userID,jdbcType=INTEGER}
+		,#{discussionCommentsUserId,jdbcType=INTEGER}
 		)
 	</insert>
 	

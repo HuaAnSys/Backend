@@ -13,6 +13,7 @@ public class DiscussionRoomInfo {
 	private String commentDetail;
 	private String commentTime;
 	private Integer discussionRoomID;
+	private Integer discussionCommentsUserId;
 	
 	//discussion_room_like
 	private Integer discussionRoomLikeId;
@@ -23,6 +24,14 @@ public class DiscussionRoomInfo {
 	//user表
 	private Integer userID;
 	private String nickName;
+	
+	public Integer getDiscussionCommentsUserId() {
+		return discussionCommentsUserId;
+	}
+	
+	public void setDiscussionCommentsUserId(Integer discussionCommentsUserId) {
+		this.discussionCommentsUserId = discussionCommentsUserId;
+	}
 	
 	public Integer getLike_userID() {
 		return like_userID;

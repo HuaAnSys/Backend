@@ -178,11 +178,9 @@ public class DiscussionRoomController {
 	@RequestMapping(value = "setDiscussionComment")
 	public @ResponseBody String setDiscussionComment(@RequestBody Map<String, String> jsonData) {
 		DiscussionRoomInfo communityAnnouncementInfo = new DiscussionRoomInfo();
-		
-		communityAnnouncementInfo.setDiscussionRoomCommentsId(Integer.valueOf(jsonData.get("discussionRoomCommentsId")));
 		communityAnnouncementInfo.setCommentDetail(jsonData.get("commentDetail"));
 		communityAnnouncementInfo.setDiscussionRoomID(Integer.valueOf(jsonData.get("discussion_roomID")));
-		
+		communityAnnouncementInfo.setDiscussionCommentsUserId(Integer.valueOf(jsonData.get("userID")));
 		JSONObject jsonObj = new JSONObject();
 		
         if (service.setDiscussionComment(communityAnnouncementInfo) == 1) {
