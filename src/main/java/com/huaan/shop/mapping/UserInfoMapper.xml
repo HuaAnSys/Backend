@@ -9,6 +9,7 @@
 		<result column="sex" property="sex" jdbcType="VARCHAR" />
 		<result column="pwd" property="pwd" jdbcType="VARCHAR" />
 		<result column="nickName" property="nickName" jdbcType="VARCHAR" />
+		<result column="user_picName" property="user_picName" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="Base_Column_List">
 		id
@@ -18,6 +19,7 @@
 		,sex
 		,pwd
 		,nickName
+		,picName user_picName
 	</sql>
 	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
 		select
