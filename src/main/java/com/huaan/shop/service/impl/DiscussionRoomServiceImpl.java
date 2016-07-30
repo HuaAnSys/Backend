@@ -54,5 +54,13 @@ public class DiscussionRoomServiceImpl implements DiscussionRoomService{
 		return result;
 	}
 
+	@Override
+	public List<DiscussionRoomInfo> getDiscussionLikeNum(int discussionID) {
+		// TODO Auto-generated method stub
+		List<DiscussionRoomInfo> dis = null;
+		dis = mapper.getDiscussionLikeNum(discussionID);
+		return dis;
+	}
+
 	
 }

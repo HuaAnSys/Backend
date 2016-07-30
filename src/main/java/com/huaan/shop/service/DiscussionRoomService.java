@@ -26,4 +26,6 @@ public interface DiscussionRoomService {
 
 	int removeDiscussionLike(DiscussionRoomInfo communityAnnouncementInfo);
 
+	List<DiscussionRoomInfo> getDiscussionLikeNum(int discussionID);
+
 }

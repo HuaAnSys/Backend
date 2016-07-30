@@ -65,8 +65,13 @@ public class BulletinController {
 		Map resultMap = new HashMap();
 		List<BulletinInfo> bulletin_comments = bulletinService.getbulletin_comments(bulletinID);
 		resultMap.put("comments",bulletin_comments);
+		//获取总评论数
 		List<BulletinInfo> bulletinLikes = bulletinService.getbulletinLike(bulletinID);
-		resultMap.put("likeNum",bulletinLikes.size());
+		if(bulletinLikes!=null&&bulletinLikes.size()>0){
+			resultMap.put("likeNum",bulletinLikes.size());
+		}else{
+			resultMap.put("likeNum",0);
+		}
 		
 		BulletinInfo bulletinInfo = new BulletinInfo();
 		bulletinInfo.setBulletin_l_bulletinID(bulletinID);

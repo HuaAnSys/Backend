@@ -46,6 +46,7 @@
 		    ,bul_c.commentTime commentTime
 		    ,bul_c.userID
 		    ,user.nickName
+		    ,user.picName userPicName
 		from bulletin_comments bul_c
 		    ,user user
 		where bul_c.userID = user.id

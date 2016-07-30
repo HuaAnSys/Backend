@@ -28,5 +28,11 @@ public interface ActityAlarmService {
 		
 		// 征集令增加评论
 		int setAlarmcomment(ActityAlarmInfo actityAlarmInfo);
+
+		List<ActityAlarmInfo> getActivityAlarmLike(ActityAlarmInfo activityAlarm);
+
+		int removeActivityLike(ActityAlarmInfo info);
+
+		List<ActityAlarmInfo> getActivityLikeNum(int activityID);
 	
 }

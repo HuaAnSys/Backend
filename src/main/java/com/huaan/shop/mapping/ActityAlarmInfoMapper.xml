@@ -9,7 +9,8 @@
 		<result column="alarm_userId" property="alarm_userId" jdbcType="INTEGER" />
 		<result column="createTime" property="createTime" jdbcType="VARCHAR" />
 		<result column="name" property="name" jdbcType="VARCHAR" />
-		
+		<result column="userPicName" property="userPicName" jdbcType="VARCHAR" />
+		<result column="nickName" property="nickName" jdbcType="VARCHAR" />
 		<result column="alarm_c_id" property="alarm_c_id" jdbcType="INTEGER" />
 		<result column="commentDetail" property="commentDetail" jdbcType="VARCHAR" />
 		<result column="commentTime" property="commentTime" jdbcType="VARCHAR" />
@@ -46,7 +47,8 @@
 			,alarm.picName
 			,alarm.userId alarm_userId
 			,alarm.createTime
-			,user.name
+			,user.picName userPicName
+			,user.nickName  nickName
 		from activity_alarm alarm
 		    ,user
 		where alarm.userId = user.id
@@ -70,22 +72,44 @@
 	
 	<!-- 获取征集令评论  -->
 	<select id="selAlarmcomments" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-	select 
+		select 
 		    alarm.id alarm_id
-		    ,alarm.content
-		    ,alarm.picName
-		    ,alarm.userId
-		    ,alarm.createTime
-		    ,alarm_c.id alarm_c_id
-		    ,alarm_c.commentDetail
-		    ,alarm_c.commentTime
-		    ,alarm_c.userID alarm_c_userID
-		    ,alarm_c.activity_alarmID alarm_c_activity_alarmId
-		from activity_alarm alarm
-		    ,activity_alarm_comments alarm_c
-		where alarm.id = alarm_c.activity_alarmID	
-		and alarm.id = #{alarm_id,jdbcType=INTEGER}
+		    ,alarm.commentDetail
+		    ,alarm.commentTime
+		    ,alarm.userID alarm_c_userID
+		    ,user.nickName
+		    ,user.picName userPicName
+		from activity_alarm_comments alarm
+			,user user
+		where 	alarm.userID = user.id
+		and alarm.activity_alarmID = #{alarm_id,jdbcType=INTEGER} 
 	</select>
+	
+	<resultMap id="getActivityAlarmLike" type="com.huaan.shop.model.ActityAlarmInfo">
+		<result column="alarm_l_id" property="alarm_l_id" jdbcType="INTEGER" />
+		<result column="like_time" property="like_time" jdbcType="VARCHAR" />
+		<result column="alarm_l_userID" property="alarm_l_userID" jdbcType="INTEGER" />
+		<result column="alarm_l_activityAlarmId" property="alarm_l_activityAlarmId" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<select id="getActivityLikeNum" resultMap="getActivityAlarmLike" parameterType="INTEGER">
+		select 
+		 id
+	 	from activity_alarm_like
+	 	where activityAlarmId = #{activityID,jdbcType = INTEGER}
+	</select>
+
+	<select id="getActivityAlarmLike" resultMap="getActivityAlarmLike" parameterType="com.huaan.shop.model.ActityAlarmInfo">		
+		select 
+			likeC.userID alarm_l_userID
+		   ,likeC.activityAlarmId alarm_l_activityAlarmId
+		from 
+			activity_alarm_like likeC
+		where 
+			likeC.userID = #{alarm_l_userID,jdbcType = INTEGER}
+			and likeC.activityAlarmId = #{alarm_l_activityAlarmId,jdbcType = INTEGER}
+	</select>
+	
 	
 	<!-- 获取征集令点赞  -->
 	<select id="selAlarmLike" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -105,7 +129,7 @@
 		and alarm.id = #{alarm_id,jdbcType=INTEGER}
 	</select>
 	
-	<!-- 征集令点赞  -->
+	<!-- 征集令user是否点赞点赞  -->
 	<insert id="insAlarmlike" parameterType="com.huaan.shop.model.ActityAlarmInfo">
 		insert into activity_alarm_like 
 		(like_time
@@ -118,6 +142,12 @@
 		,#{alarm_l_activityAlarmId,jdbcType=INTEGER}
 		)
 	</insert>
+	
+	<delete id="removeActivityLike" parameterType="com.huaan.shop.model.ActityAlarmInfo">
+		delete from activity_alarm_like
+		where userID=#{alarm_l_userID,jdbcType=INTEGER}
+		and activityAlarmId=#{alarm_l_activityAlarmId,jdbcType=INTEGER}
+	</delete>
 	
 	<!-- 征集令增加评论   --> 
 	<insert id="insAlarmcomment" parameterType="com.huaan.shop.model.ActityAlarmInfo">

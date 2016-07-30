@@ -1,5 +1,6 @@
 package com.huaan.shop.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson.JSONObject;
 import com.huaan.shop.common.FileUpload;
 import com.huaan.shop.model.ActityAlarmInfo;
+import com.huaan.shop.model.DiscussionRoomInfo;
 import com.huaan.shop.service.ActityAlarmService;
 
 @Controller
@@ -94,16 +96,36 @@ public class ActityAlarmController {
 	 * @param actityAlarmID
 	 * @return
 	 */
-	@RequestMapping(value = "getActityAlarmComments/{actityAlarmID}")
-	public @ResponseBody Object getActityAlarmComments(@PathVariable int actityAlarmID) { // return String　⇒　Object 
+	@RequestMapping(value = "getActityAlarmComments",method=RequestMethod.POST)
+	public @ResponseBody Map getActityAlarmComments(@RequestBody Map<String, String> jsonData) { // return String　⇒　Object 
 
         logger.info("enter getActityAlarmComments method."); 
+		int activityID = Integer.valueOf(jsonData.get("activityID"));
+		int userID = Integer.valueOf(jsonData.get("userID"));
+		Map resultMap = new HashMap();
+		List<ActityAlarmInfo> actityAlarmInfo = actityAlarmService.getAlarmcomments(activityID);
+		resultMap.put("comments",actityAlarmInfo);
 		
-		List<ActityAlarmInfo> actityAlarmInfo = actityAlarmService.getAlarmcomments(actityAlarmID);
+		//获取点赞数
+		List<ActityAlarmInfo> acLikes = actityAlarmService.getActivityLikeNum(activityID);
+		if(acLikes!=null&&acLikes.size()>0){
+			resultMap.put("likeNum",acLikes.size());
+		}else{
+			resultMap.put("likeNum",0);
+		}
 		
+		ActityAlarmInfo activityAlarm = new ActityAlarmInfo();
+		activityAlarm.setAlarm_l_activityAlarmId(activityID);
+		activityAlarm.setAlarm_l_userID(userID);
+		List<ActityAlarmInfo> alarmLike = actityAlarmService.getActivityAlarmLike(activityAlarm);
+		if(alarmLike.size()>0){
+			resultMap.put("likeOrNot",'Y');
+		}else{
+			resultMap.put("likeOrNot",'N');
+		}
 		logger.info("end getActityAlarmComments method.");
-		
-		return actityAlarmInfo;
+		resultMap.put("status","success");
+		return resultMap;
 	}
 
 	/**
@@ -143,16 +165,23 @@ public class ActityAlarmController {
 		
 		int userID = Integer.parseInt(jsonData.get("userID"));
 		int activityAlarmId = Integer.parseInt(jsonData.get("activityAlarmId"));
-		
+		String likeFlag = jsonData.get("likeFlag");
 		ActityAlarmInfo info = new ActityAlarmInfo();
 		info.setAlarm_l_userID(userID);
 		info.setAlarm_l_activityAlarmId(activityAlarmId);
-		
-		if(1 == actityAlarmService.setAlarmlike(info)){
-			jsonObj.put("result", "success");             	
-        } else {
-        	jsonObj.put("result", "failed"); 
-        }
+		if("Y".equals(likeFlag)){
+			if(1 == actityAlarmService.removeActivityLike(info)){
+				jsonObj.put("result", "success");             	
+	        } else {
+	        	jsonObj.put("result", "failed"); 
+	        }
+		}else if("N".equals(likeFlag)){
+			if(1 == actityAlarmService.setAlarmlike(info)){
+				jsonObj.put("result", "success");             	
+	        } else {
+	        	jsonObj.put("result", "failed"); 
+	        }
+		}
 		
 		logger.info("end setActityAlarmLike method.");
 		

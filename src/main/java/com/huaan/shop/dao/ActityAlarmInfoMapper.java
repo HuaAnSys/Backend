@@ -27,6 +27,12 @@ public interface ActityAlarmInfoMapper {
 	List<ActityAlarmInfo> getMyPostedTopic(int userId);
 
 	List<ActityAlarmInfo> getMyParticipateTopic(int userId);
+
+	List<ActityAlarmInfo> getActivityAlarmLike(ActityAlarmInfo activityAlarm);
+
+	int removeActivityLike(ActityAlarmInfo info);
+
+	List<ActityAlarmInfo> getActivityLikeNum(int activityID);
 	
 
 }

@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
 import com.huaan.shop.common.FileUpload;
+import com.huaan.shop.model.BulletinInfo;
 import com.huaan.shop.model.DiscussionRoomInfo;
 import com.huaan.shop.service.DiscussionRoomService;
 
@@ -102,7 +103,13 @@ public class DiscussionRoomController {
 		Map resultMap = new HashMap();
 		List<DiscussionRoomInfo> discussionComments = service.getDiscussionComments(discussionID);
 		resultMap.put("comments",discussionComments);
-		
+		//获取点赞数
+		List<DiscussionRoomInfo> disLikes = service.getDiscussionLikeNum(discussionID);
+		if(disLikes!=null&&disLikes.size()>0){
+			resultMap.put("likeNum",disLikes.size());
+		}else{
+			resultMap.put("likeNum",0);
+		}
 		DiscussionRoomInfo disRoom  = new DiscussionRoomInfo();
 		disRoom.setUserID(userID);
 		disRoom.setDiscussionId(discussionID);

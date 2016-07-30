@@ -25,6 +25,14 @@ public class BulletinInfo {
 	//user表
 	private Integer userID;
 	private String nickName;
+	private String userPicName;
+	
+	public String getUserPicName() {
+		return userPicName;
+	}
+	public void setUserPicName(String userPicName) {
+		this.userPicName = userPicName;
+	}
 	
 	public Integer getUserID() {
 		return userID;

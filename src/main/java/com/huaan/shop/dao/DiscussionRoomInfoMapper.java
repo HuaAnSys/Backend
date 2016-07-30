@@ -20,5 +20,7 @@ public interface DiscussionRoomInfoMapper {
 	int insNewDiscussion(DiscussionRoomInfo info);
 
 	int removeDiscussionLike(DiscussionRoomInfo communityAnnouncementInfo);
+
+	List<DiscussionRoomInfo> getDiscussionLikeNum(int discussionID);
 	
 }

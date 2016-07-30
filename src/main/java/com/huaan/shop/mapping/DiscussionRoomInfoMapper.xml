@@ -30,6 +30,7 @@
 		<result column="discussion_roomID" property="discussionRoomId" jdbcType="INTEGER" />
 		<result column="userID" property="userID" jdbcType="INTEGER" />
 		<result column="nickName" property="nickName" jdbcType="VARCHAR" />
+		<result column="userPicName" property="userPicName" jdbcType="VARCHAR" />
 	</resultMap>
 
 	<select id="getDiscussionComments" resultMap="DiscussionCommentsResultMap" parameterType="INTEGER">
@@ -39,6 +40,7 @@
 		    ,dis_c.commentTime
 		    ,dis_c.userID
 		    ,user.nickName
+		    ,user.picName userPicName
 		from discussion_room_comments dis_c
 		    ,user user
 		where dis_c.userID = user.id
@@ -52,6 +54,13 @@
 		<result column="discussionId" property="discussionId" jdbcType="INTEGER" />
 		<result column="like_userID" property="like_userID" jdbcType="INTEGER" />
 	</resultMap>
+	
+	<select id="getDiscussionLikeNum" resultMap="DiscussionLikeResultMap" parameterType = "INTEGER">
+		select 
+			id 
+		from discussion_room_like
+		where discussionId = #{discussionId}
+	</select>
 
 	<select id="getDiscussionLike" resultMap="DiscussionLikeResultMap" parameterType="com.huaan.shop.model.DiscussionRoomInfo">		
 		select 

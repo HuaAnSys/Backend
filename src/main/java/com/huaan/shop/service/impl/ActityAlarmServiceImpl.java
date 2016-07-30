@@ -55,6 +55,24 @@ public class ActityAlarmServiceImpl implements ActityAlarmService {
 	public int setAlarmcomment(ActityAlarmInfo actityAlarmInfo) {
 		return actityAlarmInfoMapper.insAlarmcomment(actityAlarmInfo);
 	}
+
+	@Override
+	public List<ActityAlarmInfo> getActivityAlarmLike(ActityAlarmInfo activityAlarm) {
+		// TODO Auto-generated method stub
+		return actityAlarmInfoMapper.getActivityAlarmLike(activityAlarm);
+	}
+
+	@Override
+	public int removeActivityLike(ActityAlarmInfo info) {
+		// TODO Auto-generated method stub
+		return actityAlarmInfoMapper.removeActivityLike(info);
+	}
+
+	@Override
+	public List<ActityAlarmInfo> getActivityLikeNum(int activityID) {
+		// TODO Auto-generated method stub
+		return actityAlarmInfoMapper.getActivityLikeNum(activityID);
+	}
 	
 		
 }
