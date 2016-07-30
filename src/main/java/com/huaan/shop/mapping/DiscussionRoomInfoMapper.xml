@@ -7,18 +7,20 @@
 		<result column="picName" property="picName" jdbcType="VARCHAR" />
 		<result column="userId" property="userId" jdbcType="INTEGER" />
 		<result column="createTime" property="createTime" jdbcType="VARCHAR" />
+		<result column="userPicName" property="userPicName" jdbcType="VARCHAR" />
+		<result column="nickName" property="nickName" jdbcType="VARCHAR" />
 	</resultMap>
-	<sql id="Base_Column_List">
-		id
-		,content
-		,picName
-		,userId
-		,createTime
-	</sql>
 	<select id="getCommunityAnnouncement" resultMap="BaseResultMap">
 		select
-		<include refid="Base_Column_List" />
-		from discussion_room
+		 dis.id
+		,dis.content
+		,dis.picName
+		,dis.userId
+		,dis.createTime
+		,user.picName userPicName
+		,user.nickName  nickName
+		from discussion_room dis,user
+		where dis.userId = user.id
 	</select>
 
 	<resultMap id="DiscussionCommentsResultMap" type="com.huaan.shop.model.DiscussionRoomInfo">
