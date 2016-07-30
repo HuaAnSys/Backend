@@ -35,7 +35,7 @@ public class ActityAlarmController {
 	 * @return
 	 */
 	@RequestMapping("/getAllActityAlarm")
-	public @ResponseBody Object getAllActityAlarm() {
+	public @ResponseBody List<ActityAlarmInfo> getAllActityAlarm() {
 		
         logger.info("enter getBulletins method."); 
 		
