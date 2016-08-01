@@ -198,10 +198,60 @@
 			select id
 			from shoppingcart 
 			where userID=#{shoppingcart_userID,jdbcType=INTEGER}
-			)
+			) and shoppingitems.status = 1
 			)
 			and product.id = shoppingitems.product_id
  		
+	</select>
+	
+	<!-- 获取待付款订单 -->
+	<select id="selbuyOrderInfo" resultMap="getShoppingCartResultMap" parameterType="java.lang.Integer">
+		select 
+ 		    product.productCategoryID productCategoryId,
+ 			product.id productId,
+ 			product.picName picName,
+ 			product.productName productName,
+ 			product.price price,
+ 			shoppingitems.productKind shoppingItem_productKind,
+ 			shoppingitems.num shoppingItem_num
+		from  product,shoppingitems
+		where 
+			product.id in(
+			select product_id
+			from shoppingitems 
+			where order_id in (
+			select id
+			from buyorder 
+			where userID=#{shoppingcart_userID,jdbcType=INTEGER} and status = 0
+			) and shoppingitems.status = 0
+			)
+			and product.id = shoppingitems.product_id
+		
+	</select>
+	
+	<!-- 获取我的订单 -->
+	<select id="getbuyOrderInfo" resultMap="getShoppingCartResultMap" parameterType="java.lang.Integer">
+		select 
+ 		    product.productCategoryID productCategoryId,
+ 			product.id productId,
+ 			product.picName picName,
+ 			product.productName productName,
+ 			product.price price,
+ 			shoppingitems.productKind shoppingItem_productKind,
+ 			shoppingitems.num shoppingItem_num
+		from  product,shoppingitems
+		where 
+			product.id in(
+			select product_id
+			from shoppingitems 
+			where order_id in (
+			select id
+			from buyorder 
+			where userID=#{shoppingcart_userID,jdbcType=INTEGER}
+			) and shoppingitems.status = 0
+			)
+			and product.id = shoppingitems.product_id
+		
 	</select>
 	
 </mapper>

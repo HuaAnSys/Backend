@@ -36,16 +36,21 @@ public class MyPersonalServiceImpl implements MyPersonalService {
 	
 	// 获取我的订单
 	@Override
-	public List<MyPersonalInfo> getbuyOrderInfo(int userID){
-		return myPersonalInfoMapper.selbuyOrderInfo(userID);
+	public List<ProductInfo> getbuyOrderInfo(int shoppingcart_userID){
+		List<ProductInfo> temp = null;
+		temp = productInfoMapper.getbuyOrderInfo(shoppingcart_userID);
+		return temp;
 	}
 
 	// 获取我的待付款订单
 	@Override
-	public List<MyPersonalInfo> getbuyOrderInfo_Pending(int userID) {
-		return myPersonalInfoMapper.selbuyOrderInfo(userID);
+	public List<ProductInfo> getbuyOrderInfo_Pending(int shoppingcart_userID) {
+		List<ProductInfo> temp = null;
+		temp = productInfoMapper.selbuyOrderInfo(shoppingcart_userID);
+		return temp;
 	}
 
+	//获取购物车
 	@Override
 	public List<ProductInfo> getMyShoppingCart(int shoppingcart_userID) {
 		// TODO Auto-generated method stub
@@ -54,6 +59,7 @@ public class MyPersonalServiceImpl implements MyPersonalService {
 		return temp;
 	}
 
+	//获取我发表的主题
 	@Override
 	public List<ActityAlarmInfo> getMyPostedTopic(int userId) {
 		// TODO Auto-generated method stub
@@ -62,6 +68,7 @@ public class MyPersonalServiceImpl implements MyPersonalService {
 		return postedList;
 	}
 
+	//获取我参与的主题
 	@Override
 	public List<ActityAlarmInfo> getParticipate(int userId) {
 		// TODO Auto-generated method stub

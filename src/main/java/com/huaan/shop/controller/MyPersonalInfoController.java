@@ -45,10 +45,10 @@ public class MyPersonalInfoController {
 	 * @param jsonData
 	 * @return
 	 */
-	@RequestMapping("/getMyPendingOrder/{userID}")
-	public @ResponseBody Object getMyPendingOrder(@PathVariable int userID) {
+	@RequestMapping("/getMyPendingOrder/{shoppingcart_userID}")
+	public @ResponseBody Object getMyPendingOrder(@PathVariable int shoppingcart_userID) {
 		logger.info("enter the getMyProperty method");
-		List<MyPersonalInfo> infos = myPersonalInfoService.getbuyOrderInfo_Pending(userID);
+		List<ProductInfo> infos = myPersonalInfoService.getbuyOrderInfo_Pending(shoppingcart_userID);
 		logger.info("end the getMyProperty method");
 		return infos;
 	}
@@ -59,10 +59,10 @@ public class MyPersonalInfoController {
 	 * @param jsonData
 	 * @return
 	 */
-	@RequestMapping("/getMyOrder/{userID}")
-	public @ResponseBody Object getMyOrder(@PathVariable int userID) {
+	@RequestMapping("/getMyOrder/{shoppingcart_userID}")
+	public @ResponseBody Object getMyOrder(@PathVariable int shoppingcart_userID) {
 		logger.info("enter the getMyProperty method");
-		List<MyPersonalInfo> infos = myPersonalInfoService.getbuyOrderInfo(userID);
+		List<ProductInfo> infos = myPersonalInfoService.getbuyOrderInfo(shoppingcart_userID);
 		logger.info("end the getMyProperty method");
 		return infos;
 	}
@@ -107,4 +107,23 @@ public class MyPersonalInfoController {
 		logger.info("end the getMyProperty method");
 		return infos;
 	}
+	
+	/**
+	 * 取消我的待付款订单
+	 * @param userID
+	 * @param orderID
+	 * @return
+	 */
+	@RequestMapping("/cancelMyPendingOrder/userId/{userID}/orderID/{orderID}")
+	public @ResponseBody Object cancelMyPendingOrder(@PathVariable int userID, @PathVariable int orderID) {
+		logger.info("enter the cancelMyPendingOrder method");
+		//implementation
+		//
+		logger.info("end the cancelMyPendingOrder method");
+		return null;
+	}
+	
+	
+	
+	
 }
