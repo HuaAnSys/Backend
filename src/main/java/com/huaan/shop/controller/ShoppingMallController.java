@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -136,11 +137,18 @@ public class ShoppingMallController {
 	 * @param jsonData
 	 * @return
 	 */
-	@RequestMapping(value = "removeProductFromCart/{productID}", method = RequestMethod.POST)
-	public @ResponseBody String removeProductFromCart(@RequestBody Map<String, String> jsonData) {
-		logger.info("enter into getProductComment method");
+	@RequestMapping(value = "removeProductFromCart/{shopItemID}", method = RequestMethod.DELETE)
+	public @ResponseBody String removeProductFromCart( @PathVariable int shopItemID) {
+		logger.info("enter into removeProductFromCart method");
 		
-		return null;
+		JSONObject jsonObj = new JSONObject();
+		if (productSerivce.removeShoppingItem(shopItemID) == 1) {
+			jsonObj.put("result", "success");
+		} else {
+			jsonObj.put("result", "failed");
+		}
+		logger.info("end into removeProductFromCart method");
+		return jsonObj.toString();
 	}
 
 	/**

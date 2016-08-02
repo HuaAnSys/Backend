@@ -76,6 +76,13 @@ public class MyPersonalServiceImpl implements MyPersonalService {
 		postedList = actityAlarmInfoMapper.getMyParticipateTopic(userId);
 		return postedList;
 	}
+	
+	//取消我的待付款订单
+	@Override
+	public int cancelMyPendingOrder(int userID, int orderID) {
+		// TODO Auto-generated method stub
+		return productInfoMapper.cancelMyPendingOrder(userID,orderID);
+	}
 
 	
 }

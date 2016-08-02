@@ -9,8 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.huaan.shop.model.ActityAlarmInfo;
 import com.huaan.shop.model.MyPersonalInfo;
 import com.huaan.shop.model.ProductInfo;
@@ -114,15 +116,19 @@ public class MyPersonalInfoController {
 	 * @param orderID
 	 * @return
 	 */
-	@RequestMapping("/cancelMyPendingOrder/userId/{userID}/orderID/{orderID}")
-	public @ResponseBody Object cancelMyPendingOrder(@PathVariable int userID, @PathVariable int orderID) {
-		logger.info("enter the cancelMyPendingOrder method");
-		//implementation
-		//
-		logger.info("end the cancelMyPendingOrder method");
-		return null;
+	@RequestMapping(value = "cancelMyPendingOrder/userID/{userID}/orderID/{orderID}", method = RequestMethod.DELETE)
+	public @ResponseBody String cancelMyPendingOrder( @PathVariable int userID, @PathVariable int orderID) {
+		logger.info("enter into cancelMyPendingOrder method");
+		
+		JSONObject jsonObj = new JSONObject();
+		if (myPersonalInfoService.cancelMyPendingOrder(userID,orderID) == 1) {
+			jsonObj.put("result", "success");
+		} else {
+			jsonObj.put("result", "failed");
+		}
+		logger.info("end into cancelMyPendingOrder method");
+		return jsonObj.toString();
 	}
-	
 	
 	
 	

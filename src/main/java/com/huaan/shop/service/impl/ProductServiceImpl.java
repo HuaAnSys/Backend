@@ -67,5 +67,11 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public List<ProductInfo> getMyShoppingCart(int shoppingcart_userID) {
 		return productInfoMapper.selMyShoppingCart(shoppingcart_userID);
+	}
+
+	//从购物车删除商品
+	@Override
+	public int removeShoppingItem(int shoppingItem_id) {
+		return productInfoMapper.removeShoppingItem(shoppingItem_id);
 	}	
 }

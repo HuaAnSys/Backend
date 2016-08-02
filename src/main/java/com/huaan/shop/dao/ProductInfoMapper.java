@@ -36,4 +36,10 @@ public interface ProductInfoMapper {
 	
 	//我的订单
 	List<ProductInfo> getbuyOrderInfo(int shoppingcart_userID);
+	
+	//从购物车删除商品
+	int removeShoppingItem(int shoppingItem_id);
+	
+	//取消我的待付款订单
+	int cancelMyPendingOrder(int userID, int orderID);
 }

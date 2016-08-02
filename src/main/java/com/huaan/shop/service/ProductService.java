@@ -31,5 +31,9 @@ public interface ProductService {
 	// 添加商品评价
 	int addProductcomment(ProductInfo productInfo);
 
+	//获取购物车
 	List<ProductInfo> getMyShoppingCart(int shoppingcart_userID);
+	
+	//从购物车删除商品
+    int removeShoppingItem(int shoppingItem_id);
 }

@@ -48,6 +48,8 @@
 		<result column="picName" property="picName" jdbcType="VARCHAR" />
 		<result column="productName" property="productName" jdbcType="VARCHAR" />
 		<result column="price" property="price" jdbcType="VARCHAR" />
+		<result column="shoppingItem_id" property="shoppingItem_id" jdbcType="INTEGER" />
+		<result column="shoopingItem_order_id" property="shoopingItem_order_id" jdbcType="INTEGER" />
 		<result column="shoppingItem_num" property="shoppingItem_num" jdbcType="INTEGER" />
 		<result column="shoppingItem_productKind" property="shoppingItem_productKind" jdbcType="VARCHAR" />
 	</resultMap>
@@ -187,6 +189,7 @@
  			product.picName picName,
  			product.productName productName,
  			product.price price,
+ 			shoppingitems.id shoppingItem_id,
  			shoppingitems.productKind shoppingItem_productKind,
  			shoppingitems.num shoppingItem_num
 		from  product,shoppingitems
@@ -200,7 +203,7 @@
 			where userID=#{shoppingcart_userID,jdbcType=INTEGER}
 			) and shoppingitems.status = 1
 			)
-			and product.id = shoppingitems.product_id
+			and product.id = shoppingitems.product_id and shoppingitems.status = 1
  		
 	</select>
 	
@@ -212,6 +215,7 @@
  			product.picName picName,
  			product.productName productName,
  			product.price price,
+ 			shoppingitems.order_id shoopingItem_order_id,
  			shoppingitems.productKind shoppingItem_productKind,
  			shoppingitems.num shoppingItem_num
 		from  product,shoppingitems
@@ -225,7 +229,7 @@
 			where userID=#{shoppingcart_userID,jdbcType=INTEGER} and status = 0
 			) and shoppingitems.status = 0
 			)
-			and product.id = shoppingitems.product_id
+			and product.id = shoppingitems.product_id and shoppingitems.status = 0
 		
 	</select>
 	
@@ -250,8 +254,18 @@
 			where userID=#{shoppingcart_userID,jdbcType=INTEGER}
 			) and shoppingitems.status = 0
 			)
-			and product.id = shoppingitems.product_id
+			and product.id = shoppingitems.product_id and shoppingitems.status = 0
 		
 	</select>
+	
+	<!-- 从购物车删除商品 -->
+	<delete id="removeShoppingItem" parameterType="java.lang.Integer">
+           delete from shoppingitems where id = #{shoppingItem_id,jdbcType=INTEGER} and status = 1;
+   </delete>
+   
+   <!-- 取消我的待付款订单 -->
+	<delete id="cancelMyPendingOrder">
+           delete from buyorder where userID = #{0,jdbcType=INTEGER} and status = 0 and id = #{1,jdbcType=INTEGER};
+   </delete>
 	
 </mapper>

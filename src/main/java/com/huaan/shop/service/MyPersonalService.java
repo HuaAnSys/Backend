@@ -31,5 +31,7 @@ public interface MyPersonalService {
 	//获取我参与的主题
 	List<ActityAlarmInfo> getParticipate(int userID);
 	
+	//取消我的待付款订单
+	int cancelMyPendingOrder(int userID, int orderID);
 	
 }
