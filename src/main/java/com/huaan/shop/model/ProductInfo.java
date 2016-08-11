@@ -10,6 +10,7 @@ public class ProductInfo {
 	private Integer productId;
 	private Integer productCategoryId;
 	private String picName;
+	private String productDetail;
 	
 	//productcomment
 	private Integer productcommentId;
@@ -51,6 +52,27 @@ public class ProductInfo {
 	private String shoppingcart_createTime;
 	private String shoppingcart_ordered;
 	
+	//buyOrder
+	private Integer order_id;
+	
+	
+	
+	public String getProductDetail() {
+		return productDetail;
+	}
+
+	public void setProductDetail(String productDetail) {
+		this.productDetail = productDetail;
+	}
+
+	public Integer getOrder_id() {
+		return order_id;
+	}
+
+	public void setOrder_id(Integer order_id) {
+		this.order_id = order_id;
+	}
+
 	public Integer getCategory_id() {
 		return category_id;
 	}

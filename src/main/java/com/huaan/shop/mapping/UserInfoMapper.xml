@@ -138,4 +138,10 @@
 		from user
 		where phoneNo = #{phoneNo,jdbcType=VARCHAR}
 	</select>
+	
+	<update id="updateNickName" parameterType="com.huaan.shop.model.UserInfo">
+		update user
+		set nickName = #{nickName,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+</update>
 </mapper>

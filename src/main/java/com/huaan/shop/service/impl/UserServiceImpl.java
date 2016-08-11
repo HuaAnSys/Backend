@@ -57,4 +57,9 @@ public class UserServiceImpl implements UserService {
 		return userInfoMapper.selectInfoByphoneNo(phoneNo);
 	}
 
+	@Override
+	public int updateNickName(UserInfo userInfo) {
+		return userInfoMapper.updateNickName(userInfo);
+	}
+
 }

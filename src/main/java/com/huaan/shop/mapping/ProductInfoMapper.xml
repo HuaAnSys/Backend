@@ -5,6 +5,7 @@
 		<result column="productId" property="productId" jdbcType="INTEGER" />
 		<result column="productCategoryId" property="productCategoryId" jdbcType="INTEGER" />
 		<result column="picName" property="picName" jdbcType="VARCHAR" />
+		<result column="productDetail" property="productDetail" jdbcType="VARCHAR" />
 		<result column="hotProduct" property="hotProduct" jdbcType="VARCHAR" />
 		<result column="advisedProduct" property="advisedProduct" jdbcType="VARCHAR" />
 		<result column="status" property="status" jdbcType="VARCHAR" />
@@ -53,6 +54,9 @@
 		<result column="shoppingItem_num" property="shoppingItem_num" jdbcType="INTEGER" />
 		<result column="shoppingItem_productKind" property="shoppingItem_productKind" jdbcType="VARCHAR" />
 	</resultMap>
+	<resultMap id="BuyOrderMap" type="com.huaan.shop.model.ProductInfo">
+	    <result column="id" property="order_id" jdbcType="INTEGER" />	
+	</resultMap>
 	<sql id="Base_Column_List">
 		id
 		,picName
@@ -83,6 +87,7 @@
 		select
 			product.id productId
 			,productCategoryId
+			,productDetail
 			,productCategory.categoryName productCategoryName
 			,picName
 			,hotProduct
@@ -139,15 +144,17 @@
 		<result column="commentTime" property="commentTime" jdbcType="VARCHAR" />
 		
 	</resultMap>
+	
 	<select id="getProductComments" resultMap="ProductCommentsResultMap">
 		select 
+			product.productCategoryID productCategoryId,
 			productID  
 		    ,commentDetail           
 			,commentLevel            
 			,commentTime   
 			,productID as id          
-		from productcomment
-		where productID  = #{productID,jdbcType=INTEGER}
+		from productcomment,product 
+		where productID  = #{productID,jdbcType=INTEGER} and productcomment.productID = product.id
 	</select>
 	
 	<insert id="addProduct2cart" parameterType="com.huaan.shop.model.ProductInfo">
@@ -232,6 +239,36 @@
 			and product.id = shoppingitems.product_id and shoppingitems.status = 0
 		
 	</select>
+
+	<!-- 获取待付款订单ID -->
+	<select id="getbuyOrderID" resultMap="BuyOrderMap" parameterType="java.lang.Integer">		
+		select buyorder.id order_id
+		from buyorder 
+		where userID=#{shoppingcart_userID,jdbcType=INTEGER} and status = 0
+		
+	</select>
+	
+	<!-- 根据orderID获取待付款订单 -->
+	<select id="getbuyOrderInfoByID" resultMap="getShoppingCartResultMap" parameterType="java.lang.Integer">
+		select 
+ 		    product.productCategoryID productCategoryId,
+ 			product.id productId,
+ 			product.picName picName,
+ 			product.productName productName,
+ 			product.price price,
+ 			shoppingitems.order_id shoopingItem_order_id,
+ 			shoppingitems.productKind shoppingItem_productKind,
+ 			shoppingitems.num shoppingItem_num
+		from  product,shoppingitems
+		where 
+			product.id in(
+			select product_id
+			from shoppingitems 
+			where order_id = #{order_id,jdbcType=INTEGER} and shoppingitems.status = 0
+			)
+			and product.id = shoppingitems.product_id and shoppingitems.status = 0 and shoppingitems.order_id = #{order_id,jdbcType=INTEGER};
+		
+	</select>
 	
 	<!-- 获取我的订单 -->
 	<select id="getbuyOrderInfo" resultMap="getShoppingCartResultMap" parameterType="java.lang.Integer">
@@ -242,8 +279,9 @@
  			product.productName productName,
  			product.price price,
  			shoppingitems.productKind shoppingItem_productKind,
- 			shoppingitems.num shoppingItem_num
-		from  product,shoppingitems
+ 			shoppingitems.num shoppingItem_num,
+ 			buyorder.status
+		from  product,shoppingitems,buyorder
 		where 
 			product.id in(
 			select product_id
@@ -251,10 +289,10 @@
 			where order_id in (
 			select id
 			from buyorder 
-			where userID=#{shoppingcart_userID,jdbcType=INTEGER}
+			where userID=#{shoppingcart_userID,jdbcType=INTEGER} and status = 1
 			) and shoppingitems.status = 0
 			)
-			and product.id = shoppingitems.product_id and shoppingitems.status = 0
+			and product.id = shoppingitems.product_id and shoppingitems.status = 0 and buyorder.status = 1 and shoppingitems.order_id = buyorder.id
 		
 	</select>
 	

@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
+import com.huaan.shop.common.FileUpload;
+import com.huaan.shop.model.ActityAlarmInfo;
+import com.huaan.shop.model.ProductInfo;
 import com.huaan.shop.model.UserInfo;
 import com.huaan.shop.service.UserService;
 
@@ -104,14 +107,39 @@ public class UserController {
 		return jsonObj;
 	}
 	
-	@RequestMapping("/updateUserInfo/userId/{userID}")
-	public @ResponseBody Object updateUserInfo(@RequestParam(value = "file") MultipartFile file, HttpServletRequest request) {
+	@RequestMapping(value = "updateNickName/userId/{userID}", method = RequestMethod.POST)
+	public @ResponseBody String evaluateProduct(@RequestBody Map<String, String> jsonData, @PathVariable int userID) {
+		logger.info("enter into evaluateProduct method");
+
+		UserInfo userInfo = new UserInfo();
+		userInfo.setId(Integer.valueOf(jsonData.get("userID")));
+		userInfo.setNickName(jsonData.get("nickName"));
+
+		JSONObject jsonObj = new JSONObject();
+		
+		if (userService.updateNickName(userInfo) == 1) {
+			jsonObj.put("result", "success");
+		} else {
+			jsonObj.put("result", "failed");
+		}
+
+		logger.info("end evaluateProduct method.");
+		return jsonObj.toString();
+	}
+
+	
+//	@RequestMapping("/updateUserInfo/userId/{userID}")
+	@RequestMapping(value = "updateUserInfo/userId/{userID}", method = RequestMethod.POST)
+	public @ResponseBody String updateUserInfo(@RequestParam(value = "file") MultipartFile file, HttpServletRequest request, @PathVariable int userID) {
 
 		logger.info("enter updateUserInfo method.");
+		
 
 
-
+		logger.info("end updateUserInfo method.");
+		
 		return null;
+
 	} 
 	
 }

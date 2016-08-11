@@ -34,6 +34,12 @@ public interface ProductInfoMapper {
 	//待付款订单
 	List<ProductInfo> selbuyOrderInfo(int shoppingcart_userID);
 	
+	//获取待付款订单ID
+	List<ProductInfo> getbuyOrderID(int shoppingcart_userID);
+	
+	//根据orderID获取待付款订单
+	List<ProductInfo> getbuyOrderInfoByID(int order_id);
+	
 	//我的订单
 	List<ProductInfo> getbuyOrderInfo(int shoppingcart_userID);
 	

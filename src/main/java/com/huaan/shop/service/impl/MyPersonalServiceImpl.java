@@ -84,5 +84,19 @@ public class MyPersonalServiceImpl implements MyPersonalService {
 		return productInfoMapper.cancelMyPendingOrder(userID,orderID);
 	}
 
+	//获取待付款订单ID
+	@Override
+	public List<ProductInfo> getbuyOrderID(int shoppingcart_userID) {
+		// TODO Auto-generated method stub
+		return productInfoMapper.getbuyOrderID(shoppingcart_userID);
+	}
+
+	//根据orderID获取待付款订单
+	@Override
+	public List<ProductInfo> getbuyOrderInfoByID(int order_id) {
+		// TODO Auto-generated method stub
+		return productInfoMapper.getbuyOrderInfoByID(order_id);
+	}
+
 	
 }

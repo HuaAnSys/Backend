@@ -25,4 +25,7 @@ public interface UserService {
 	
 	// check pwd by telno
 	UserInfo getInfoByphoneNo(String phoneNo);
+	
+	//update user information
+	int updateNickName(UserInfo userInfo);
 }

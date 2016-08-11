@@ -27,5 +27,7 @@ public interface UserInfoMapper {
     
     // select all by telno
     UserInfo selectInfoByphoneNo(String phoneNo);
+    
+    int updateNickName(UserInfo userInfo);
 
 }

@@ -124,10 +124,14 @@ public class ShoppingMallController {
 	public @ResponseBody List<ProductInfo> getProductComments(@RequestBody Map<String, String> jsonData) {
 		logger.info("enter into getProductComments method");
 
+		System.out.println(jsonData.get("productID"));
 		int productID = Integer.valueOf(jsonData.get("productID"));
 
 		List<ProductInfo> productComments = productSerivce.getProductComments(productID);
-
+		for(int i=0;i<productComments.size();i++){
+			System.out.println(productComments.get(i));
+		}
+		
 		logger.info("end into getProductComments method");
 		return productComments;
 	}

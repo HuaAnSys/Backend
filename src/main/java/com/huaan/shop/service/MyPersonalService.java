@@ -22,6 +22,12 @@ public interface MyPersonalService {
 	// 获取我的待付款订单
 	List<ProductInfo> getbuyOrderInfo_Pending(int shoppingcart_userID);
 	
+	//获取待付款订单ID
+	List<ProductInfo> getbuyOrderID(int shoppingcart_userID);
+	
+	//根据orderID获取待付款订单
+	List<ProductInfo> getbuyOrderInfoByID(int order_id);
+	
 	// 获取我的购物车
 	List<ProductInfo> getMyShoppingCart(int shoppingcart_userID);
 

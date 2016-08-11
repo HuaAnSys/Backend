@@ -1,5 +1,6 @@
 package com.huaan.shop.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,12 +48,27 @@ public class MyPersonalInfoController {
 	 * @param jsonData
 	 * @return
 	 */
+//	@RequestMapping("/getMyPendingOrder/{shoppingcart_userID}")
+//	public @ResponseBody Object getMyPendingOrder(@PathVariable int shoppingcart_userID) {
+//		logger.info("enter the getMyProperty method");
+//		List<ProductInfo> infos = myPersonalInfoService.getbuyOrderInfo_Pending(shoppingcart_userID);
+//		logger.info("end the getMyProperty method");
+//		return infos;
+//	}
+	
 	@RequestMapping("/getMyPendingOrder/{shoppingcart_userID}")
-	public @ResponseBody Object getMyPendingOrder(@PathVariable int shoppingcart_userID) {
-		logger.info("enter the getMyProperty method");
-		List<ProductInfo> infos = myPersonalInfoService.getbuyOrderInfo_Pending(shoppingcart_userID);
-		logger.info("end the getMyProperty method");
-		return infos;
+	public @ResponseBody Map getMyPendingOrder(@PathVariable int shoppingcart_userID) {
+		logger.info("enter the getMyPendingOrder method");
+		Map resultMap = new HashMap();
+		List<ProductInfo> buyOrderID = myPersonalInfoService.getbuyOrderID(shoppingcart_userID);
+	    for(int i =0;i<buyOrderID.size();i++){
+	    	int order_id = buyOrderID.get(i).getOrder_id();
+	    	List<ProductInfo> infos = myPersonalInfoService.getbuyOrderInfoByID(order_id);
+		    resultMap.put(order_id, infos);  
+        }
+//		resultMap.put(arg0, arg1)
+		logger.info("end the getMyPendingOrder method");
+		return resultMap;
 	}
 
 	/**
